@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title New Tab
+    link(rel="shortcut icon", href="icons/icon_128.png", type="image/x-icon")
+    link(rel="stylesheet", href="css/main.css")
+    script(src="js/main.js" defer)
+  body
+    //- Start Nav
+    nav
+      .container
+        h1 #[span.hour]:#[span.minute]#[span.session]
+        h1 #[span.day] / #[span.month] / #[span.year]
+    //- End Nav
+    .landing
+      .container
+        .welcomeBox
+          p #[span.wellcome], #[input(type="text", class="inputName", placeholder="Name", title="Click and write your name")]
+        .form
+          i(class="search searchButton" title="Search")
+          input(type="search", class="searchInput", inputmode="search", placeholder="Search Google", autocomplete="off")
+        .bottom
+          .quotes
+            h2 Quote of Day
+            p.quote
+            p.author
+          .todoBox
+            h2 Today
+            input(class="todo", type="text", placeholder="eg: Finish the last project")
+  .wallpaperIcon
+    i(class="now_wallpaper")
+    span Change Wallpaper
+  .wallpaper
+    i(class="close")
+    div(class="drop-zone")
+      span(class="drop-zone__prompt") Drop file here or click to upload
+      input(type="file" name="myFile" class="drop-zone__input")

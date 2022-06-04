@@ -1,0 +1,203 @@
+// Start Global Values
+body {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background: url("../images/wallpaper.jpg") center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+  overflow: hidden;
+  font-family: 'Kdam Thmor Pro', sans-serif !important;
+  &::before {
+    content: '';
+    height: 100vh;
+    width: 100vw;
+    background-color: #00000070;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+nav, .landing {
+  position: relative;
+}
+// End Global Values
+// Start Nav
+nav {
+  padding: 20px 0;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      margin: 0;
+      font-size: 16px;
+      span {
+        padding: 0 2px;
+      }
+    }
+  }
+}
+// End Nav
+// Start Landing
+.landing {
+  margin-top: 60px;
+  .container {
+    .welcomeBox {
+      text-align: center;
+      font-size: 30px;
+      input {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-size: 33px;
+        color: #fff;
+        width: 200px;
+        &::placeholder {
+          color: #fff;
+        }
+      }
+    }
+    .form {
+      position: relative;
+      margin: 0 auto;
+      width: 600px;
+      .searchButton {
+        color: #000;
+        position: absolute;
+        top: 9px;
+        left: 11px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .searchInput {
+        width: 100%;
+        font-size: 16px;
+        background-color: #fff;
+        padding: 10px 10px 10px 40px;
+        border: none;
+        border-radius: 15px;
+        outline: none;
+        &::placeholder {
+          color: #000;
+        }
+      }
+    }
+    .bottom {
+      margin-top: 150px;
+      display: flex;
+      justify-content: space-between;
+      gap: 50px;
+      .quotes {
+        width: 50%;
+        h2 {
+          font-size: 26px;
+        }
+        .quote {
+          font-size: 18px;
+        }
+        .author {
+          font-size: 14px;
+        }
+      }
+      .todoBox {
+        width: 50%;
+        input {
+          background-color: transparent;
+          border: none;
+          outline: none;
+          width: 100%;
+          color: #fff;
+          font-size: 18px;
+          font-family: 'Kdam Thmor Pro', sans-serif !important;
+          &::placeholder {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+.wallpaperIcon {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 10px;
+  cursor: pointer;
+  user-select: none;
+  i {
+    margin-right: 5px;
+    font-size: 12px;
+  }
+}
+.wallpaper {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background-color: #0c0c0ee1;
+  padding: 20px;
+  border-radius: 10px;
+  &.show {
+    display: block;
+  }
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .drop-zone {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 200px;
+    height: 200px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    color: #cccccc;
+    border: 4px dashed #009578;
+    border-radius: 10px;
+  }
+  .drop-zone--over {
+    border-style: solid;
+  }
+  .drop-zone__input {
+    display: none;
+  }
+  .drop-zone__thumb {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #cccccc;
+    background-size: cover;
+    position: relative;
+    &::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 5px 0;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.75);
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+
+}
+// End Landing
