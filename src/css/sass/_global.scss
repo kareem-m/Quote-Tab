@@ -92,6 +92,7 @@ nav {
       .quotes {
         width: 50%;
         h2 {
+          margin-top: 0;
           font-size: 26px;
         }
         .quote {
@@ -103,6 +104,10 @@ nav {
       }
       .todoBox {
         width: 50%;
+        h2 {
+          margin-top: 0;
+          font-size: 26px;
+        }
         input {
           background-color: transparent;
           border: none;
