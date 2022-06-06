@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('../fonts/icomoon.eot?f1pud3');
-  src:  url('../fonts/icomoon.eot?f1pud3#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?f1pud3') format('truetype'),
-    url('../fonts/icomoon.woff?f1pud3') format('woff'),
-    url('../fonts/icomoon.svg?f1pud3#icomoon') format('svg');
+  src:  url('../fonts/icomoon.eot?pusjfw');
+  src:  url('../fonts/icomoon.eot?pusjfw#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?pusjfw') format('truetype'),
+    url('../fonts/icomoon.woff?pusjfw') format('woff'),
+    url('../fonts/icomoon.svg?pusjfw#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,6 @@
 i {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
-  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -28,6 +27,9 @@ i {
 .now_wallpaper:before {
   content: "\e900";
 }
+.plus:before {
+  content: "\f067";
+}
 .search:before {
   content: "\f002";
 }
@@ -39,4 +41,10 @@ i {
 }
 .times:before {
   content: "\f00d";
+}
+.list-ul:before {
+  content: "\f0ca";
+}
+.trash:before {
+  content: "\f1f8";
 }

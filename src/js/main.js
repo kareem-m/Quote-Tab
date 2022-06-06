@@ -44,11 +44,11 @@ const wellcome = document.querySelector(".wellcome"),
 
 /*
   For Hellping
-  1 2 3 4 5 6       7 8 9 10 11    12 13 14 15 16 17     18 19 20 21 22 23 24
-  Good Evening      Good Morning     Good Afternoon         Good Evening
+  1 2 3 4 5         6 7 8 9 10 11    12 13 14 15 16 17     18 19 20 21 22 23 24
+  Good Evening       Good Morning     Good Afternoon          Good Evening
 */
 
-if (currentTime >= 7 && currentTime <= 11) {
+if (currentTime >= 6 && currentTime <= 11) {
   wellcome.innerText = "Good Morning";
 } else if (currentTime >= 12 && currentTime <= 17) {
   wellcome.innerText = "Good Afternoon";
@@ -99,23 +99,139 @@ fetch("js/quotes.json")
 
   })
 
-// Todo
+// To fo focus
 const todo = document.querySelector(".todo");
 todo.addEventListener("input", () => {
   localStorage.setItem("todo", todo.value);
 });
 todo.setAttribute("value", localStorage.getItem("todo"));
 
+// Click Todo
+const todoIcon = document.querySelector(".todoIcon"),
+  todoList = document.querySelector(".todoList"),
+  closeButtonOne = document.querySelector(".closeOne");
+
+todoIcon.addEventListener("click", () => {
+  todoList.classList.toggle("show");
+  todoInput.focus();
+});
+
+closeButtonOne.addEventListener("click", () => {
+  todoList.classList.remove("show");
+});
+
+// Todo List
+const todoInput = document.querySelector(".todoInput"),
+  todoButton = document.querySelector(".todoButton"),
+  todoButtonClear = document.querySelector(".todoButtonClear"),
+  tasksDiv = document.querySelector(".tasks");
+
+let tasks = [];
+
+if (localStorage.getItem("tasks")) {
+  tasks = JSON.parse(localStorage.getItem("tasks"));
+}
+
+getDataFromLocalStorage()
+
+// click on button by enter key
+todoInput.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    todoButton.click();
+  }
+});
+
+todoButton.addEventListener("click", () => {
+  if (todoInput !== "") {
+    addTasksToArray()
+    todoInput.value = "";
+  }
+});
+
+// Delete Tasks
+tasksDiv.addEventListener("click", (e) => {
+  if (e.target.classList.contains("close")) {
+    // remove from localstorage
+    delTask(e.target.parentElement.getAttribute("data-id"));
+    // remove from page
+    e.target.parentElement.remove();
+  }
+});
+
+// Clear Tasks
+todoButtonClear.addEventListener("click", () => {
+  tasksDiv.innerHTML = "There are no tasks";
+  localStorage.removeItem("tasks");
+  tasks = [];
+});
+
+// push task into array of tasks
+function addTasksToArray() {
+  const task = {
+    id: Date.now(),
+    title: todoInput.value,
+  };
+  tasks.push(task);
+
+  addTasksToPage();
+  addTasksToLocalStorage();
+}
+
+// add tasks into page
+function addTasksToPage() {
+  tasksDiv.innerHTML = "";
+  tasks.forEach((task) => {
+
+    // Chick if task is done
+    if(task.completed) {
+      div.classList.add("done");
+    }
+
+    // make main div
+    const div = document.createElement("div");
+    div.setAttribute("data-id", task.id);
+    div.innerHTML = task.title;
+    
+    // make delete button
+    const delButton = document.createElement("i");
+    delButton.className = "close";
+    div.appendChild(delButton);
+
+    tasksDiv.appendChild(div);
+  });
+}
+
+// To add Tasks to localstorage
+function addTasksToLocalStorage() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// To Get data from localstorage
+function getDataFromLocalStorage() {
+  let data = localStorage.getItem("tasks");
+  if (data) {
+    let tasks = JSON.parse(data);
+    addTasksToPage();
+  }
+}
+
+// delete tasks from localstorage
+function delTask(taskId) {
+  tasks = tasks.filter((task) => task.id != taskId);
+  addTasksToLocalStorage();
+}
+
 // Click wallpaper icon
 const wallpaperIcon = document.querySelector(".wallpaperIcon"),
-  wallpaper = document.querySelector(".wallpaper");
-  closeButton = document.querySelector(".close");
+  wallpaper = document.querySelector(".wallpaper"),
+  closeButtonTwo = document.querySelector(".closeTwo");
 
 wallpaperIcon.addEventListener("click", () => {
   wallpaper.classList.toggle("show");
 });
 
-closeButton.addEventListener("click", () => {
+closeButtonTwo.addEventListener("click", () => {
   wallpaper.classList.remove("show");
 });
 

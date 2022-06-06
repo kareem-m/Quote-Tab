@@ -124,6 +124,115 @@ nav {
     }
   }
 }
+// Start Todo
+.todoIcon {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 10px;
+  cursor: pointer;
+  user-select: none;
+  i {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+}
+.todoList {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background-color: #12151ef6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 9px 3px 10px #0000002b;
+  &.show {
+    display: block;
+  }
+  > .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .form {
+    h1 {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 0;
+    }
+    .inputs {
+      display: flex;
+      align-items: center;
+      input {
+        width: 100%;
+        height: 40px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 16px;
+        outline: none;
+      }
+      button {
+        width: 50px;
+        height: 40px;
+        background-color: #fff;
+        border-radius: 15px;
+        outline: none;
+        margin-left: 10px;
+        cursor: pointer;
+        border: none;
+        i {
+          font-size: 20px;
+          color: #12151ef6;
+        }
+      }
+    }
+    .tasks {
+      border: 2px solid #fff;
+      border-radius: 10px;
+      height: 450px;
+      margin-top: 20px;
+      padding: 10px;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background: #ffffff57;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #fff;
+        border-radius: 10px;
+      }
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px;
+        width: 100%;
+        color: #12151ef6;
+        border-radius: 10px;
+        margin: 10px 0;
+        transition: 0.3s;
+        &:hover {
+          background-color: #ffffffea;
+        }
+        .close {
+          font-size: 18px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+// End Todo
+// Start Wallpaper
 .wallpaperIcon {
   position: absolute;
   bottom: 20px;
@@ -144,9 +253,10 @@ nav {
   transform: translate(-50%, -50%);
   width: 600px;
   height: 400px;
-  background-color: #0c0c0ee1;
+  background-color: #12151ef6;
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 9px 3px 10px #0000002b;
   &.show {
     display: block;
   }
@@ -205,4 +315,5 @@ nav {
   }
 
 }
+// End Wallpaper
 // End Landing

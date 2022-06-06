@@ -30,11 +30,24 @@ html(lang="en")
           .todoBox
             h2 Today
             input(class="todo", type="text", placeholder="eg: Finish the last project")
+  .todoIcon
+    span To Do List
+    i(class="list-ul")
+  .todoList
+    i(class="close closeOne")
+    .form
+      h1 To Do List
+      .inputs
+        input(type="text", class="todoInput", placeholder="Task...")
+        button.todoButton #[i(class="plus")]
+        button.todoButtonClear #[i(class="trash")]
+      .tasks There are no tasks
+
   .wallpaperIcon
     i(class="now_wallpaper")
     span Change Wallpaper
   .wallpaper
-    i(class="close")
+    i(class="close closeTwo")
     div(class="drop-zone")
       span(class="drop-zone__prompt") Drop file here or click to upload
       input(type="file" name="myFile" class="drop-zone__input")
