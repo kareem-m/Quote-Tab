@@ -21,7 +21,14 @@ function showTime() {
         session = document.querySelector(".session"),
         date = new Date();
 
-    hour.innerHTML = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+    if (date.getHours() > 12) {
+        hour.innerHTML = (date.getHours - 12);
+    } else if (date.getHours() === 0) {
+        hour.innerHTML = 12;
+    } else {
+        hour.innerHTML = date.getHours;
+    }
+
     minute.innerHTML = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
     session.innerHTML = date.getHours() > 12 ? session.innerHTML = "PM" : session.innerHTML = "AM";
 
