@@ -99,7 +99,15 @@ fetch("https://api.quotable.io/random")
         quote.textContent = data.content;
         author.textContent = `— ${data.author}`;
     })
-    .catch(error => console.error("Error fetching quote:", error));
+    .catch(error => {
+        console.error("Error fetching quote:", error);
+
+        const quote = document.querySelector(".quote"),
+            author = document.querySelector(".author");
+
+        quote.textContent = "The Internet is becoming the town square for the global village of tomorrow";
+        author.textContent = "— Bill Gates";
+    });
 
 
 // To do "focus"
