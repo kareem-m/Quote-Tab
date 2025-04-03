@@ -7,7 +7,7 @@
 <br>
 
 ## How To Use It ?
-- First, download "quote-tap.zip" file to your computer & extract it
+- First, download ["quote-tap.zip"](https://github.com/kareem-m/Quote-Tab/blob/main/quote-tap.zip) file to your computer & extract it
 - Second, enter this link into the Google Chrome browser
   - chrome://extensions/
 - Then activate the "Developer mode" option, which is located in the top right

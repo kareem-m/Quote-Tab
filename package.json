@@ -2,9 +2,9 @@
   "scripts": {
     "start": "node server.js"
   },
-  "name": "quote-tap",
+  "name": "quote-tab",
   "description": "Awesome Extension for Google Chrome New Tab",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   "keywords": [
     "chrome-extension"
   ],
-  "author": "kareem",
+  "author": "Kareem Elramady",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kareem-m/Quote-Tab/issues"
