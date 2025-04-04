@@ -142,6 +142,10 @@ closeButtonOne.addEventListener("click", () => {
     blurBackground.classList.remove("active");
 });
 
+todoList.addEventListener("click", (event) => {
+    event.stopPropagation();
+});
+
 document.addEventListener("click", (event) => {
     if (!todoList.contains(event.target) && event.target !== todoIcon) {
         todoList.classList.remove("show");
@@ -265,6 +269,10 @@ wallpaperIcon.addEventListener("click", (event) => {
 closeButtonTwo.addEventListener("click", () => {
     wallpaper.classList.remove("show");
     blurBackground.classList.remove("active");
+});
+
+wallpaper.addEventListener("click", (event) => {
+    event.stopPropagation();
 });
 
 document.addEventListener("click", (event) => {
