@@ -21,20 +21,21 @@ function showTime() {
         session = document.querySelector(".session"),
         date = new Date();
 
-    if (date.getHours() > 12) {
-        hour.innerHTML = (date.getHours - 12);
-    } else if (date.getHours() === 0) {
-        hour.innerHTML = 12;
-    } else {
-        hour.innerHTML = date.getHours;
+    let hours = date.getHours();
+    if (hours > 12) {
+        hours -= 12;
+    } else if (hours === 0) {
+        hours = 12;
     }
+    hour.innerHTML = hours;
 
     minute.innerHTML = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-    session.innerHTML = date.getHours() > 12 ? session.innerHTML = "PM" : session.innerHTML = "AM";
+    session.innerHTML = date.getHours() >= 12 ? "PM" : "AM";
 
     setTimeout(showTime, 1000);
 }
-showTime()
+showTime();
+
 
 // Date
 const day = document.querySelector(".day"),
