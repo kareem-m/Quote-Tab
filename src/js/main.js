@@ -101,7 +101,7 @@ fetch("https://dummyjson.com/quotes/random")
         author.textContent = `— ${data.author}`;
     })
     .catch(error => {
-        console.error("Error fetching quote:", error);
+        // console.error("Error fetching quote:", error);
 
         const quote = document.querySelector(".quote"),
             author = document.querySelector(".author");
