@@ -91,13 +91,13 @@ searchButton.onclick = function () {
 
 
 // Quotes
-fetch("https://api.quotable.io/random")
-    .then(response => response.json())
+fetch("https://dummyjson.com/quotes/random")
+    .then(res => res.json())
     .then(data => {
         const quote = document.querySelector(".quote"),
             author = document.querySelector(".author");
 
-        quote.textContent = data.content;
+        quote.textContent = data.quote;
         author.textContent = `— ${data.author}`;
     })
     .catch(error => {
@@ -106,8 +106,8 @@ fetch("https://api.quotable.io/random")
         const quote = document.querySelector(".quote"),
             author = document.querySelector(".author");
 
-        quote.textContent = "The Internet is becoming the town square for the global village of tomorrow";
-        author.textContent = "— Bill Gates";
+        quote.textContent = "In the middle of difficulty lies opportunity.";
+        author.textContent = "— Albert Einstein";
     });
 
 
