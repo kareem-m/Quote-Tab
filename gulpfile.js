@@ -42,6 +42,7 @@ gulp.task("zip", () => {
   return gulp.src('public/**/*.*')
     .pipe(zip('quote-tap.zip'))
     .pipe(gulp.dest('.'))
+    .pipe(gulp.dest('website'))
 });
 
 // Watch Task
