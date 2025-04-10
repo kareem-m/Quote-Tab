@@ -1,7 +1,7 @@
 // Update Popup
-const currentVersion = chrome.runtime.getManifest().version;
+const currentVersion = "2.1.2";
 
-fetch('https://example.com/update-info.json')
+fetch('https://quote-tab.netlify.app/update-info.json')
     .then(response => response.json())
     .then(data => {
         if (data.latest_version !== currentVersion) {
@@ -11,7 +11,6 @@ fetch('https://example.com/update-info.json')
     })
     .catch(error => console.error('Error fetching update info:', error));
 
-// إغلاق الـ popup عند الضغط على زر "Close"
 document.getElementById('close-popup').addEventListener('click', () => {
     const popup = document.getElementById('update-popup');
     popup.style.display = 'none';
@@ -22,7 +21,6 @@ document.getElementById('close-popup').addEventListener('click', () => {
 if (localStorage.getItem('update_popup_closed') === 'true') {
     document.getElementById('update-popup').style.display = 'none';
 }
-
 
 
 // Check if localStorage is available
