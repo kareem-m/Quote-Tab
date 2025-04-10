@@ -1,3 +1,7 @@
+<img src="https://kareem.is-a.dev/img/projects/quoteTab.png" style="border-radius: 10px"></img>
+
+<br>
+
 <div align="center">
   <img src="https://raw.githubusercontent.com/kareem-m/Quote-Tab/main/public/icons/icon_128.png"></img>
 

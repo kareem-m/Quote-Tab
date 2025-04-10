@@ -1,3 +1,30 @@
+// Update Popup
+const currentVersion = chrome.runtime.getManifest().version;
+
+fetch('https://example.com/update-info.json')
+    .then(response => response.json())
+    .then(data => {
+        if (data.latest_version !== currentVersion) {
+            const popup = document.getElementById('update-popup');
+            popup.style.display = 'block';
+        }
+    })
+    .catch(error => console.error('Error fetching update info:', error));
+
+// إغلاق الـ popup عند الضغط على زر "Close"
+document.getElementById('close-popup').addEventListener('click', () => {
+    const popup = document.getElementById('update-popup');
+    popup.style.display = 'none';
+
+    localStorage.setItem('update_popup_closed', 'true');
+});
+
+if (localStorage.getItem('update_popup_closed') === 'true') {
+    document.getElementById('update-popup').style.display = 'none';
+}
+
+
+
 // Check if localStorage is available
 if (localStorage.getItem("name") == null) {
     localStorage.setItem("name", "");
@@ -91,23 +118,24 @@ searchButton.onclick = function () {
 
 
 // Quotes
-fetch("https://dummyjson.com/quotes/random")
+fetch("js/quotes.json")
     .then(res => res.json())
     .then(data => {
-        const quote = document.querySelector(".quote"),
-            author = document.querySelector(".author");
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const selectedQuote = data[randomIndex];
 
-        quote.textContent = data.quote;
-        author.textContent = `— ${data.author}`;
+        const quote = document.querySelector(".quote");
+        const author = document.querySelector(".author");
+
+        quote.textContent = selectedQuote.quote;
+        author.textContent = `— ${selectedQuote.author}`;
     })
     .catch(error => {
-        // console.error("Error fetching quote:", error);
+        const quote = document.querySelector(".quote");
+        const author = document.querySelector(".author");
 
-        const quote = document.querySelector(".quote"),
-            author = document.querySelector(".author");
-
-        quote.textContent = "In the middle of difficulty lies opportunity.";
-        author.textContent = "— Albert Einstein";
+        quote.textContent = "No Wi-Fi, no wisdom. Reconnect and try again";
+        author.textContent = "";
     });
 
 

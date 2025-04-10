@@ -14,6 +14,12 @@ html(lang="en")
 
         script(src="js/main.js" defer)
     body
+        //- Start update Popup
+        div(id="update-popup")
+            p A new version of the extension is available! 
+                a(href="https://example.com/extension/download" target="_blank") Download it here
+            i(class="close" id="close-popup")
+        //- End update Popup
         //- Start Nav
         nav
             .container

@@ -10,7 +10,6 @@ body {
     overflow: hidden;
     font-family: "Cairo", sans-serif;
 
-
     &::before {
         content: '';
         height: 100vh;
@@ -19,6 +18,28 @@ body {
         position: fixed;
         top: 0;
         left: 0;
+    }
+}
+
+#update-popup {
+    display: none;
+    background-color: #fff;
+    color: #000;
+    padding: 10px 20px;
+    width: 100vw;
+    position: relative;
+    p {
+        margin: 0;
+        a {
+            color: #F7374F;
+            font-weight: bold;
+        }
+    }
+    i {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 20px;
     }
 }
 
