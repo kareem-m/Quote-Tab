@@ -14,13 +14,8 @@ fetch('https://quote-tab.netlify.app/update-info.json')
 document.getElementById('close-popup').addEventListener('click', () => {
     const popup = document.getElementById('update-popup');
     popup.style.display = 'none';
-
-    localStorage.setItem('update_popup_closed', 'true');
 });
 
-if (localStorage.getItem('update_popup_closed') === 'true') {
-    document.getElementById('update-popup').style.display = 'none';
-}
 
 
 // Check if localStorage is available

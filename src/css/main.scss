@@ -30,6 +30,7 @@ body {
     position: relative;
     p {
         margin: 0;
+        font-size: 16px;
         a {
             color: #F7374F;
             font-weight: bold;
@@ -40,6 +41,7 @@ body {
         top: 15px;
         right: 20px;
         font-size: 20px;
+        cursor: pointer;
     }
 }
 
