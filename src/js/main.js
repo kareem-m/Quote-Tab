@@ -1,5 +1,5 @@
 // Update Popup
-const currentVersion = "2.1.2";
+const currentVersion = "2.1.3";
 
 fetch('https://quote-tab.netlify.app/update-info.json')
     .then(response => response.json())
