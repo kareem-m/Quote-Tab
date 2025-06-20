@@ -1,5 +1,5 @@
 // Update Popup
-const currentVersion = "2.1.3";
+const currentVersion = "2.2.3";
 
 fetch('https://quote-tab.netlify.app/update-info.json')
     .then(response => response.json())
@@ -27,9 +27,6 @@ if (localStorage.getItem("todo") == null) {
     localStorage.setItem("todo", "");
 }
 
-if (localStorage.getItem("wallpaper") == null) {
-    localStorage.setItem("wallpaper", "images/wallpaper.jpg");
-}
 
 // Important Variable
 const date = new Date();
@@ -108,6 +105,61 @@ searchButton.onclick = function () {
     let url = `https://www.google.com/search?q=` + searchInput.value;
     window.open(url, "_self");
 };
+
+
+// Brawsing History
+chrome.runtime.sendMessage({ action: "getHistory" }, function (response) {
+    if (!response || !response.data) return;
+
+    const counts = {};
+
+    response.data.forEach(page => {
+        try {
+            const urlObj = new URL(page.url);
+            const hostname = urlObj.hostname;
+
+            if (!counts[hostname]) {
+                // Extract clean site name from hostname
+                const siteName = hostname
+                    .replace(/^www\./, '')
+                    .split('.')[0]
+                    .replace(/^\w/, c => c.toUpperCase());
+
+                counts[hostname] = {
+                    count: 0,
+                    sampleUrl: `${urlObj.protocol}//${urlObj.hostname}`,
+                    sampleTitle: siteName
+                };
+            }
+
+            counts[hostname].count += 1;
+        } catch (e) {
+            console.warn("Invalid URL skipped:", page.url);
+        }
+    });
+
+    const sorted = Object.entries(counts)
+        .sort((a, b) => b[1].count - a[1].count)
+        .slice(0, 8);
+
+    const list = document.getElementById('history-list');
+    list.innerHTML = ''; // Clear old list
+
+    sorted.forEach(([hostname, data]) => {
+        const li = document.createElement('li');
+        const faviconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${hostname}`;
+        li.innerHTML = `
+            <a href="${data.sampleUrl}">
+                <img src="${faviconUrl}">
+                <p>${data.sampleTitle}</p>
+            </a>
+        `;
+
+        list.appendChild(li);
+    });
+});
+
+
 
 
 // Quotes
@@ -344,12 +396,10 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 function updateThumbnail(dropZoneElement, file) {
     let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
 
-    // First time - remove the prompt
     if (dropZoneElement.querySelector(".drop-zone__prompt")) {
         dropZoneElement.querySelector(".drop-zone__prompt").remove();
     }
 
-    // First time - there is no thumbnail element, so lets create it
     if (!thumbnailElement) {
         thumbnailElement = document.createElement("div");
         thumbnailElement.classList.add("drop-zone__thumb");
@@ -358,23 +408,42 @@ function updateThumbnail(dropZoneElement, file) {
 
     thumbnailElement.dataset.label = file.name;
 
-    // Show thumbnail for image files
     if (file.type.startsWith("image/")) {
         const reader = new FileReader();
 
         reader.readAsDataURL(file);
         reader.onload = () => {
-            localStorage.setItem("wallpaper", `${reader.result}`)
-            thumbnailElement.style.backgroundImage = `url(${localStorage.getItem("wallpaper")})`;
-            document.body.style.backgroundImage = `url(${localStorage.getItem("wallpaper")})`;
-            document.location.reload(true);
+            chrome.storage.local.set({ wallpaper: reader.result }, () => {
+                thumbnailElement.style.backgroundImage = `url(${reader.result})`;
+                document.body.style.backgroundImage = `url(${reader.result})`;
+                document.location.reload(true);
+            });
         };
     } else {
         thumbnailElement.style.backgroundImage = null;
     }
 }
 
-document.body.style.backgroundImage = `url(${localStorage.getItem("wallpaper")})`
+
+
+chrome.storage.local.get("wallpaper", (result) => {
+    if (result.wallpaper) {
+        document.body.style.backgroundImage = `url(${result.wallpaper})`;
+    }
+});
+
+chrome.storage.local.get("wallpaper", (result) => {
+    if (result.wallpaper) {
+        document.body.style.backgroundImage = `url(${result.wallpaper})`;
+    } else {
+        const defaultWallpaper = "images/wallpaper.jpg";
+        document.body.style.backgroundImage = `url(${defaultWallpaper})`;
+
+        chrome.storage.local.set({ wallpaper: defaultWallpaper });
+    }
+});
+
+
 
 // Console message
 console.log('%c Developed by: Eng. Kareem Elramady https://kareem.is-a.dev', 'background: white; color: black; padding: 10px; border: 1px solid black; font-size: 16px; border-radius: 10px;');

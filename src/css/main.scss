@@ -3,7 +3,6 @@ body {
     position: relative;
     height: 100vh;
     width: 100vw;
-    background: url("../images/wallpaper.jpg") center;
     background-repeat: no-repeat;
     background-size: cover;
     color: #fff;
@@ -28,14 +27,17 @@ body {
     padding: 10px 20px;
     width: 100vw;
     position: relative;
+
     p {
         margin: 0;
         font-size: 16px;
+
         a {
             color: #F7374F;
             font-weight: bold;
         }
     }
+
     i {
         position: absolute;
         top: 15px;
@@ -124,8 +126,50 @@ nav {
             }
         }
 
+        ul#history-list {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            li {
+                a {
+                    border-radius: 40%;
+                    background-color: #56565626;
+                    width: 80px;
+                    height: 80px;
+                    cursor: pointer;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    transition: 0.5s;
+                    &:hover {
+                        background-color: #5656567a;
+                    }
+                    &:hover img {
+                        transform: translateY(-3px);
+                        filter: grayscale(0);
+                    }
+
+                    img {
+                        border-radius: 30%;
+                        $len: 30px;
+                        width: $len;
+                        height: $len;
+                        filter: grayscale(0.4);
+                        transition: 0.5s;
+                    }
+
+                    p {
+                        color: #fff;
+                        margin: 5px 0 0;
+                    }
+                }
+            }
+        }
+
         .bottom {
-            margin-top: 130px;
+            margin-top: 40px;
             display: flex;
             justify-content: space-between;
             gap: 100px;
@@ -142,7 +186,7 @@ nav {
                     font-size: 18px;
                     margin-left: 20px;
                 }
-                
+
                 .author {
                     font-size: 18px;
                     margin-left: 20px;
@@ -202,7 +246,7 @@ nav {
     font-size: 16px;
     cursor: pointer;
     user-select: none;
-    
+
     i {
         margin-left: 10px;
     }
