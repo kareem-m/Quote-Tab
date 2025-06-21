@@ -126,11 +126,18 @@ nav {
             }
         }
 
-        ul#history-list {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
+        ul#shortcut-list {
+            display: none;
             gap: 20px;
+            position: absolute;
+            top: 190px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            &.active {
+                display: flex;
+            }
+
             li {
                 a {
                     border-radius: 40%;
@@ -143,9 +150,11 @@ nav {
                     align-items: center;
                     justify-content: center;
                     transition: 0.5s;
+
                     &:hover {
                         background-color: #5656567a;
                     }
+
                     &:hover img {
                         transform: translateY(-3px);
                         filter: grayscale(0);
@@ -169,7 +178,7 @@ nav {
         }
 
         .bottom {
-            margin-top: 40px;
+            margin-top: 150px;
             display: flex;
             justify-content: space-between;
             gap: 100px;
@@ -368,7 +377,7 @@ nav {
 
 // End Todo
 // Start Wallpaper
-.wallpaperIcon {
+.settingsIcon {
     position: absolute;
     bottom: 20px;
     left: 40px;
@@ -381,14 +390,14 @@ nav {
     }
 }
 
-.wallpaper {
+.settings {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 600px;
-    height: 400px;
+    width: 800px;
+    height: 500px;
     background-color: #12151ef6;
-    padding: 20px;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 9px 3px 10px #0000002b;
     opacity: 0;
@@ -411,56 +420,112 @@ nav {
         cursor: pointer;
     }
 
-    .drop-zone {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        max-width: 200px;
-        height: 200px;
-        padding: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-weight: 500;
-        font-size: 20px;
-        cursor: pointer;
-        color: #cccccc;
-        border: 4px dashed #009578;
-        border-radius: 10px;
+    h3 {
+        font-size: 25px;
+        margin: 0 0 10px;
     }
 
-    .drop-zone--over {
-        border-style: solid;
-    }
+    .shortcuts {
+        label {
+            font-size: 16px;
+        }
 
-    .drop-zone__input {
-        display: none;
-    }
+        .custom-checkbox input {
+            display: none;
+        }
 
-    .drop-zone__thumb {
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        overflow: hidden;
-        background-color: #cccccc;
-        background-size: cover;
-        position: relative;
+        .custom-checkbox .checkmark {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+            vertical-align: middle;
+            position: relative;
+            margin-right: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-        &::after {
-            content: attr(data-label);
+        .custom-checkbox input:checked+.checkmark {
+            background-color: #A08963;
+        }
+
+        .custom-checkbox .checkmark::after {
+            content: "";
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 5px 0;
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.75);
-            font-size: 14px;
+            display: none;
+            left: 8px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3.5px 3.5px 0;
+            transform: rotate(45deg);
+        }
+
+        .custom-checkbox input:checked+.checkmark::after {
+            display: block;
+        }
+
+    }
+
+    .wallpaper {
+        margin-top: 30px;
+
+        .drop-zone {
+            // position: absolute;
+            // top: 50%;
+            // left: 50%;
+            // transform: translate(-50%, -50%);
+            max-width: 220px;
+            height: 200px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            font-weight: 500;
+            font-size: 20px;
+            cursor: pointer;
+            color: #ccc;
+            border: 4px dashed #A08963;
+            border-radius: 10px;
+            margin: 20px auto;
+        }
+
+        .drop-zone--over {
+            border-style: solid;
+        }
+
+        .drop-zone__input {
+            display: none;
+        }
+
+        .drop-zone__thumb {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #cccccc;
+            background-size: cover;
+            position: relative;
+
+            &::after {
+                content: attr(data-label);
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                padding: 5px 0;
+                color: #ffffff;
+                background: rgba(0, 0, 0, 0.75);
+                font-size: 14px;
+                text-align: center;
+            }
         }
     }
+
 
 }
 

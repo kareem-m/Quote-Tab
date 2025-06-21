@@ -1,15 +1,17 @@
 // Update Popup
-const currentVersion = "2.2.3";
+const currentVersion = "2.3.3";
 
-fetch('https://quote-tab.netlify.app/update-info.json')
-    .then(response => response.json())
-    .then(data => {
-        if (data.latest_version !== currentVersion) {
-            const popup = document.getElementById('update-popup');
-            popup.style.display = 'block';
+chrome.runtime.sendMessage({ action: "checkUpdate" }, (response) => {
+    if (response.success) {
+        if (response.version !== currentVersion) {
+            const popup = document.getElementById("update-popup");
+            popup.style.display = "block";
         }
-    })
-    .catch(error => console.error('Error fetching update info:', error));
+    } else {
+        console.error("Error fetching update info:", response.error);
+    }
+});
+
 
 document.getElementById('close-popup').addEventListener('click', () => {
     const popup = document.getElementById('update-popup');
@@ -142,7 +144,7 @@ chrome.runtime.sendMessage({ action: "getHistory" }, function (response) {
         .sort((a, b) => b[1].count - a[1].count)
         .slice(0, 8);
 
-    const list = document.getElementById('history-list');
+    const list = document.getElementById('shortcut-list');
     list.innerHTML = ''; // Clear old list
 
     sorted.forEach(([hostname, data]) => {
@@ -328,34 +330,59 @@ function delTask(taskId) {
     addTasksToLocalStorage();
 }
 
-// Click wallpaper icon
-const wallpaperIcon = document.querySelector(".wallpaperIcon"),
-    wallpaper = document.querySelector(".wallpaper"),
+// Click settings icon
+const settingsIcon = document.querySelector(".settingsIcon"),
+    settings = document.querySelector(".settings"),
     closeButtonTwo = document.querySelector(".closeTwo");
 
-wallpaperIcon.addEventListener("click", (event) => {
-    wallpaper.classList.toggle("show");
+settingsIcon.addEventListener("click", (event) => {
+    settings.classList.toggle("show");
     blurBackground.classList.toggle("active");
     event.stopPropagation();
 });
 
 closeButtonTwo.addEventListener("click", () => {
-    wallpaper.classList.remove("show");
+    settings.classList.remove("show");
     blurBackground.classList.remove("active");
 });
 
-wallpaper.addEventListener("click", (event) => {
+settings.addEventListener("click", (event) => {
     event.stopPropagation();
 });
 
 document.addEventListener("click", (event) => {
-    if (!wallpaper.contains(event.target) && event.target !== wallpaperIcon) {
-        wallpaper.classList.remove("show");
+    if (!settings.contains(event.target) && event.target !== settingsIcon) {
+        settings.classList.remove("show");
         blurBackground.classList.remove("active");
     }
 });
 
-// Drag And Drop
+// Show Shortcuts
+const checkbox = document.getElementById("toggle-shortcuts");
+const targetElement = document.querySelector("#shortcut-list");
+
+// set default value if not set
+if (localStorage.getItem("showShortcuts") === null) {
+    localStorage.setItem("showShortcuts", "false");
+}
+
+// read from localStorage
+const savedState = localStorage.getItem("showShortcuts") === "true";
+
+// apply initial state
+checkbox.checked = savedState;
+targetElement.classList.toggle("active", savedState);
+
+// listen for change
+checkbox.addEventListener("change", () => {
+    const isChecked = checkbox.checked;
+    localStorage.setItem("showShortcuts", isChecked);
+    targetElement.classList.toggle("active", isChecked);
+});
+
+
+
+// Drag And Drop Wallpaper
 document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
     const dropZoneElement = inputElement.closest(".drop-zone");
 

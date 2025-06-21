@@ -11,8 +11,6 @@ html(lang="en")
         link(rel="preconnect" href="https://fonts.googleapis.com")
         link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
         link(href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet")
-
-        script(src="js/main.js" defer)
     body
         //- Start update Popup
         div(id="update-popup")
@@ -34,7 +32,7 @@ html(lang="en")
                     i(class="search searchButton" title="Search")
                     input(type="search", class="searchInput", inputmode="search", placeholder="Search Google", autocomplete="off")
                 
-                ul(id="history-list")
+                ul(id="shortcut-list")
                 
                 .bottom
                     .quotes
@@ -57,11 +55,21 @@ html(lang="en")
                     button.todoButtonClear #[i(class="trash")]
                 .tasks There are no tasks
 
-        .wallpaperIcon
+        .settingsIcon
             i(class="now_wallpaper")
-            span Change Wallpaper
-        .wallpaper
+            span settings
+        .settings
             i(class="close closeTwo")
-            div(class="drop-zone")
-                span(class="drop-zone__prompt") Drop file here or click to upload
-                input(type="file" name="myFile" class="drop-zone__input")
+            .shortcuts
+                h3 Shortcuts
+                label(class="custom-checkbox")
+                    input(type="checkbox" id="toggle-shortcuts")
+                    span.checkmark
+                    |Show Shortcuts
+            .wallpaper
+                h3 Change Wallpaper
+                div(class="drop-zone")
+                    span(class="drop-zone__prompt") Drop Image here or click to upload
+                    input(type="file" name="myFile" class="drop-zone__input")
+
+    script(src="js/main.js")
