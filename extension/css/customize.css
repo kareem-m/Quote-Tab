@@ -1,4 +1,7 @@
 /* Make sure you place the base color of the website in a variable */
+:root {
+  --main-color: #a08963;
+}
 /* The main styles */
 * {
   box-sizing: border-box;
@@ -7,7 +10,7 @@
 html {
   scroll-behavior: smooth;
   /* For change scroll bar in firefox*/
-  scrollbar-color: var(--main-color, #07f) #fff;
+  scrollbar-color: var(--main-color, #07f) #12151e;
   scrollbar-width: thin; /*or auto*/
 }
 body {
@@ -26,13 +29,13 @@ body {
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--main-background, #fff);
+  background: var(--main-background, #12151e);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--main-color, #07f);
 }
 ::-webkit-scrollbar-thumb:hover {
-  border: 1px solid #fff;
+  border: 1px solid #12151e;
 }
 
 /* global values */

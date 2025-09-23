@@ -1,3 +1,16 @@
+// Backend
+const token = localStorage.getItem("token");
+if (!token) {
+    window.location.href = "login.html";
+}
+
+// Logout
+document.getElementById("logout").addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+});
+
+
 // Update Popup
 const currentVersion = "2.3.3";
 
@@ -17,8 +30,6 @@ document.getElementById('close-popup').addEventListener('click', () => {
     const popup = document.getElementById('update-popup');
     popup.style.display = 'none';
 });
-
-
 
 // Check if localStorage is available
 if (localStorage.getItem("name") == null) {
@@ -228,6 +239,207 @@ document.addEventListener("click", (event) => {
     }
 });
 
+
+
+
+// Todo List (with API)
+const todoInput = document.querySelector(".todoInput"),
+    todoButton = document.querySelector(".todoButton"),
+    todoButtonClear = document.querySelector(".todoButtonClear"),
+    tasksDiv = document.querySelector(".tasks");
+
+const API_URL = "https://quote-tab-test.vercel.app/api/todos";
+
+// Create empty message element
+const emptyMsg = document.createElement("p");
+emptyMsg.className = "empty-msg";
+emptyMsg.textContent = "There are no tasks";
+tasksDiv.appendChild(emptyMsg);
+
+function checkEmptyTasks() {
+    if (tasksDiv.querySelectorAll("div[data-id]").length === 0) {
+        if (!tasksDiv.contains(emptyMsg)) {
+            tasksDiv.appendChild(emptyMsg);
+        }
+    } else {
+        if (tasksDiv.contains(emptyMsg)) {
+            emptyMsg.remove();
+        }
+    }
+}
+
+// Get tasks from API
+async function getTasksFromAPI() {
+    const res = await fetch(API_URL, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+    const tasks = await res.json();
+    renderTasks(tasks);
+}
+
+// Render tasks on page
+function renderTasks(tasks) {
+    tasksDiv.innerHTML = "";
+
+    if (!tasks || tasks.length === 0) {
+        tasksDiv.appendChild(emptyMsg);
+        return;
+    }
+
+    tasks.forEach(task => {
+        createTaskElement(task._id, task.title, task.completed);
+    });
+
+    checkEmptyTasks();
+}
+
+// Create task element (used in render + add)
+function createTaskElement(id, title, completed = false) {
+    const div = document.createElement("div");
+    div.setAttribute("data-id", id);
+    div.className = "task";
+    div.textContent = title;
+
+    if (completed) div.classList.add("completed");
+
+    const iconsDiv = document.createElement("div");
+    iconsDiv.className = "icons";
+
+    const toggleBtn = document.createElement("i");
+    toggleBtn.className = "icon-checkmark";
+    toggleBtn.addEventListener("click", () =>
+        toggleTaskCompleted(id, !div.classList.contains("completed"), div, toggleBtn)
+    );
+    iconsDiv.appendChild(toggleBtn);
+
+    const delButton = document.createElement("i");
+    delButton.className = "icon-cross";
+    delButton.addEventListener("click", () => delTaskFromAPI(id));
+    iconsDiv.appendChild(delButton);
+
+    div.appendChild(iconsDiv);
+
+    if (completed) {
+        tasksDiv.appendChild(div);
+    } else {
+        const firstCompleted = tasksDiv.querySelector(".completed");
+        if (firstCompleted) {
+            tasksDiv.insertBefore(div, firstCompleted);
+        } else {
+            tasksDiv.appendChild(div);
+        }
+    }
+
+    checkEmptyTasks();
+    return div;
+}
+
+
+// Toggle completed
+async function toggleTaskCompleted(taskId, newStatus, div, toggleBtn) {
+    if (newStatus) {
+        div.classList.add("completed");
+        tasksDiv.appendChild(div);
+    } else {
+        div.classList.remove("completed");
+        const firstCompleted = tasksDiv.querySelector(".completed");
+        if (firstCompleted) {
+            tasksDiv.insertBefore(div, firstCompleted);
+        } else {
+            tasksDiv.appendChild(div);
+        }
+    }
+
+    const res = await fetch(`${API_URL}?id=${taskId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ completed: newStatus })
+    });
+
+    if (!res.ok) {
+        // revert status if failed
+        if (newStatus) {
+            div.classList.remove("completed");
+        } else {
+            div.classList.add("completed");
+        }
+        console.log("Error updating task");
+    }
+}
+
+// Add task
+async function addTaskToAPI(title) {
+    if (tasksDiv.contains(emptyMsg)) {
+        emptyMsg.remove();
+    }
+
+    const customId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
+    // Optimistic UI update
+    const div = createTaskElement(customId, title, false);
+
+    // Send request to backend
+    const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ _id: customId, title })
+    });
+
+    if (!res.ok) {
+        // remove if request fails
+        div.remove();
+        checkEmptyTasks();
+        console.log("Error while adding task");
+    }
+}
+
+// Delete single task
+async function delTaskFromAPI(taskId) {
+    document.querySelector(`[data-id="${taskId}"]`)?.remove();
+    checkEmptyTasks();
+
+    const res = await fetch(`${API_URL}?id=${taskId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if (!res.ok) {
+        getTasksFromAPI();
+    }
+}
+
+// Add task with button or Enter
+todoButton.addEventListener("click", () => {
+    if (todoInput.value.trim() !== "") {
+        addTaskToAPI(todoInput.value);
+        todoInput.value = "";
+    }
+});
+
+todoInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        todoButton.click();
+    }
+});
+
+// When page reload
+getTasksFromAPI();
+
+
+
+/* Old (Local Storage)
+
 // Todo List
 const todoInput = document.querySelector(".todoInput"),
     todoButton = document.querySelector(".todoButton"),
@@ -330,6 +542,10 @@ function delTask(taskId) {
     addTasksToLocalStorage();
 }
 
+*/
+
+
+
 // Click settings icon
 const settingsIcon = document.querySelector(".settingsIcon"),
     settings = document.querySelector(".settings"),
@@ -358,8 +574,8 @@ document.addEventListener("click", (event) => {
 });
 
 // Show Shortcuts
-const checkbox = document.getElementById("toggle-shortcuts");
-const targetElement = document.querySelector("#shortcut-list");
+const checkbox_shortcuts = document.getElementById("toggle-shortcuts");
+const shortcut_list = document.querySelector("#shortcut-list");
 
 // set default value if not set
 if (localStorage.getItem("showShortcuts") === null) {
@@ -367,17 +583,17 @@ if (localStorage.getItem("showShortcuts") === null) {
 }
 
 // read from localStorage
-const savedState = localStorage.getItem("showShortcuts") === "true";
+const shortcutsState = localStorage.getItem("showShortcuts") === "true";
 
 // apply initial state
-checkbox.checked = savedState;
-targetElement.classList.toggle("active", savedState);
+checkbox_shortcuts.checked = shortcutsState;
+shortcut_list.classList.toggle("active", shortcutsState);
 
 // listen for change
-checkbox.addEventListener("change", () => {
-    const isChecked = checkbox.checked;
+checkbox_shortcuts.addEventListener("change", () => {
+    const isChecked = checkbox_shortcuts.checked;
     localStorage.setItem("showShortcuts", isChecked);
-    targetElement.classList.toggle("active", isChecked);
+    shortcut_list.classList.toggle("active", isChecked);
 });
 
 
@@ -472,5 +688,88 @@ chrome.storage.local.get("wallpaper", (result) => {
 
 
 
+// Show prayer
+const checkbox = document.getElementById("toggle-prayer");
+const nextPrayerElement = document.querySelector("#nextPrayer");
+
+// set default value if not set
+if (localStorage.getItem("showPrayer") === null) {
+    localStorage.setItem("showPrayer", "false");
+}
+
+// read from localStorage
+const savedPrayerState = localStorage.getItem("showPrayer") === "true";
+
+// apply initial state
+checkbox.checked = savedPrayerState;
+nextPrayerElement.classList.toggle("active", savedPrayerState);
+
+// listen for change
+checkbox.addEventListener("change", () => {
+    const isChecked = checkbox.checked;
+    localStorage.setItem("showPrayer", isChecked);
+    nextPrayerElement.classList.toggle("active", isChecked);
+});
+
+
+
+// Next Prayer
+async function getPrayerTimingsByCity(prayerCity, prayerCountry = "Egypt") {
+    const url = `https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(prayerCity)}&country=${encodeURIComponent(prayerCountry)}&method=5`;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.code === 200 && data.data && data.data.timings) {
+        return data.data.timings;
+    } else {
+        throw new Error("Failed to fetch prayer timings");
+    }
+}
+
+function formatTo12Hour(timeStr) {
+    let [h, m] = timeStr.split(":").map(x => parseInt(x, 10));
+    const suffix = h >= 12 ? "PM" : "AM";
+    h = h % 12 || 12;
+    return `${h}:${m.toString().padStart(2, "0")} ${suffix}`;
+}
+
+function getNextPrayerInfo(prayerTimings) {
+    const now = new Date();
+    const prayerOrder = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+    for (const prayerName of prayerOrder) {
+        const timeStr = prayerTimings[prayerName];
+        const [h, m] = timeStr.split(":").map(x => parseInt(x, 10));
+        const prayerDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
+        if (prayerDate > now) {
+            return { prayerName, prayerTime: formatTo12Hour(timeStr) };
+        }
+    }
+    return { prayerName: "Fajr", prayerTime: formatTo12Hour(prayerTimings["Fajr"]) };
+}
+
+async function updateNextPrayer(prayerCity) {
+    const nextPrayerDiv = document.getElementById("nextPrayer");
+    nextPrayerDiv.textContent = "Loading prayer times...";
+    try {
+        const prayerTimings = await getPrayerTimingsByCity(prayerCity);
+        const nextPrayer = getNextPrayerInfo(prayerTimings);
+        nextPrayerDiv.textContent = `${nextPrayer.prayerName} - ${nextPrayer.prayerTime}`;
+    } catch (err) {
+        nextPrayerDiv.textContent = "Error loading prayer: " + err.message;
+    }
+}
+
+document.getElementById("city").addEventListener("change", async (e) => {
+    const selectedPrayerCity = e.target.value;
+    localStorage.setItem("selectedPrayerCity", selectedPrayerCity);
+    updateNextPrayer(selectedPrayerCity);
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    const savedPrayerCity = localStorage.getItem("selectedPrayerCity") || "Alexandria";
+    document.getElementById("city").value = savedPrayerCity;
+    updateNextPrayer(savedPrayerCity);
+});
+
+
 // Console message
-console.log('%c Developed by: Eng. Kareem Elramady https://kareem.is-a.dev', 'background: white; color: black; padding: 10px; border: 1px solid black; font-size: 16px; border-radius: 10px;');
+// console.log('%c Developed by: Eng. Kareem Elramady https://kareem.is-a.dev', 'background: white; color: black; padding: 10px; border: 1px solid black; font-size: 16px; border-radius: 10px;');

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Tab</title>
+        <link rel="shortcut icon" href="icons/icon_128.png" type="image/x-icon">
+        <link rel="stylesheet" href="css/icomoon.css">
+        <link rel="stylesheet" href="css/customize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&amp;display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="update-popup">
+            <p>A new version of the extension is available! <a href="https://quote-tab.netlify.app/">Download it here</a>
+            </p><i class="close" id="close-popup"></i>
+        </div>
+        <nav>
+            <div class="container">
+                <h1><span class="hour"></span>:<span class="minute"></span><span class="session"></span></h1>
+                <h1><span class="day"></span> / <span class="month"></span> / <span class="year"></span></h1>
+            </div>
+        </nav>
+        <div class="landing">
+            <div class="container">
+                <div class="welcomeBox">
+                    <p><span class="wellcome"></span>, <input class="inputName" type="text" placeholder="Name"
+                            title="Click and write your name"></p>
+                </div>
+                <div class="form"><i class="search searchButton" title="Search"></i><input class="searchInput" type="search"
+                        inputmode="search" placeholder="Search Google" autocomplete="off"></div>
+                <ul id="shortcut-list"></ul>
+                <div class="bottom">
+                    <div class="quotes">
+                        <h2>Quote of Day</h2>
+                        <p class="quote"></p>
+                        <p class="author"></p>
+                    </div>
+                    <div class="todoBox">
+                        <h2>Today</h2><input class="todo" type="text" placeholder="eg: Finish the last project">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="todoIcon">
+            <span>To Do List</span>
+        </div>
+
+        <div class="todoList">
+            <i class="icon-cross closeOne"></i>
+            <div class="form">
+                <h1>To Do List</h1>
+                <div class="inputs">
+                    <input class="todoInput" type="text" placeholder="Task...">
+                    <button class="todoButton">
+                        <i class="icon-plus"></i>
+                    </button>
+                    <!-- <button class="todoButtonClear">
+                        <i class="trash"></i>
+                    </button> -->
+                </div>
+                <div class="tasks"></div>
+            </div>
+        </div>
+
+        <div id="nextPrayer"></div>
+
+        <div class="settingsIcon">
+            <span>settings</span>
+        </div>
+
+        <div class="settings">
+            <i class="icon-cross closeTwo"></i>
+
+            <div class="shortcuts">
+                <h3>Shortcuts</h3>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="toggle-shortcuts">
+                    <span class="checkmark"></span>
+                    Show Shortcuts
+                </label>
+            </div>
+
+            <div class="nextPrayer">
+                <h3>Next Prayer</h3>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="toggle-prayer">
+                    <span class="checkmark"></span>
+                    Show Next Prayer
+                </label>
+                <p>Select City</p>
+                <select id="city">
+                    <option value="Cairo">Cairo</option>
+                    <option value="Giza">Giza</option>
+                    <option value="Qalyubia">Qalyubia</option>
+                    <option value="Alexandria">Alexandria</option>
+                    <option value="Beheira">Beheira</option>
+                    <option value="Matrouh">Matrouh</option>
+                    <option value="Kafr El Sheikh">Kafr El Sheikh</option>
+                    <option value="Gharbia">Gharbia</option>
+                    <option value="Monufia">Monufia</option>
+                    <option value="Dakahlia">Dakahlia</option>
+                    <option value="Damietta">Damietta</option>
+                    <option value="Port Said">Port Said</option>
+                    <option value="Ismailia">Ismailia</option>
+                    <option value="Suez">Suez</option>
+                    <option value="Sharqia">Sharqia</option>
+                    <option value="North Sinai">North Sinai</option>
+                    <option value="South Sinai">South Sinai</option>
+                    <option value="Beni Suef">Beni Suef</option>
+                    <option value="Fayoum">Fayoum</option>
+                    <option value="Minya">Minya</option>
+                    <option value="Assiut">Assiut</option>
+                    <option value="Sohag">Sohag</option>
+                    <option value="Qena">Qena</option>
+                    <option value="Luxor">Luxor</option>
+                    <option value="Aswan">Aswan</option>
+                    <option value="Red Sea">Red Sea</option>
+                    <option value="New Valley">New Valley</option>
+                </select>
+            </div>
+
+            <div class="wallpaper">
+                <h3>Change Wallpaper</h3>
+                <div class="drop-zone">
+                    <span class="drop-zone__prompt">Drop Image here or click to upload</span>
+                    <input class="drop-zone__input" type="file" name="myFile">
+                </div>
+            </div>
+
+            <div class="logout">
+                <h3>Logout</h3>
+                <button id="logout">Logout</button>
+            </div>
+        </div>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>

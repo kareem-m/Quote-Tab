@@ -1,0 +1,80 @@
+body {
+    font-family: "Cairo", sans-serif;
+    background-color: #12151e;
+    color: #fff;
+    text-align: center;
+}
+
+h1 {
+    font-size: 46px;
+    margin: 60px 0 0;
+}
+
+h2 {
+    font-size: 38px;
+    margin: 0 0 80px;
+    font-weight: normal;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    input {
+        width: 400px;
+        height: 60px;
+        background-color: #12151e;
+        border: 2px solid #fff;
+        border-radius: 24px;
+        outline: none;
+        color: #fff;
+        padding: 0 20px 0;
+        font-size: 18px;
+        &::placeholder {
+            color: #fff;
+        }
+    }
+    .pass {
+        position: relative;
+        i {
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+    button {
+        width: 130px;
+        height: 50px;
+        background-color: #fff;
+        color: #12151e;
+        font-size: 20px;
+        border: 2px solid #fff;
+        border-radius: 20px;
+        transition: 0.5s;
+        cursor: pointer;
+        &:hover {
+            border: 2px solid #fff;
+            background-color: #12151e;
+            color: #fff;
+        }
+    }
+    hr {
+        width: 400px;
+    }
+    p {
+        font-size: 18px;
+        margin: 0;
+        a {
+            padding-left: 10px;
+            color: #fff;
+            text-decoration: none;
+            color: #07f;
+        }
+    }
+}

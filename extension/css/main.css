@@ -1,4 +1,4 @@
-// Start Global Values
+/* Start Global Values */
 body {
     position: relative;
     height: 100vh;
@@ -52,8 +52,7 @@ nav,
     position: relative;
 }
 
-// End Global Values
-// Start Nav
+/* Start Nav */
 nav {
     padding: 20px 0;
 
@@ -73,8 +72,9 @@ nav {
     }
 }
 
-// End Nav
-// Start Landing
+/* End Nav */
+
+/* Start Landing */
 .landing {
     margin-top: 60px;
 
@@ -162,9 +162,8 @@ nav {
 
                     img {
                         border-radius: 30%;
-                        $len: 30px;
-                        width: $len;
-                        height: $len;
+                        width: 30px;
+                        height: 30px;
                         filter: grayscale(0.4);
                         transition: 0.5s;
                     }
@@ -220,7 +219,6 @@ nav {
                     font-family: "Cairo", sans-serif;
                     margin-left: 20px;
 
-
                     &::placeholder {
                         color: #fff;
                     }
@@ -230,7 +228,7 @@ nav {
     }
 }
 
-// blur background for todo list and wallpaper
+/* blur background */
 .blur-background {
     position: fixed;
     top: 0;
@@ -247,7 +245,7 @@ nav {
     }
 }
 
-// Start Todo
+/* Start Todo */
 .todoIcon {
     position: absolute;
     bottom: 20px;
@@ -283,11 +281,11 @@ nav {
         transform: translate(-50%, -50%) scale(1);
     }
 
-    >.close {
+    >.icon-cross {
         position: absolute;
         top: 20px;
         right: 20px;
-        font-size: 20px;
+        font-size: 15px;
         cursor: pointer;
     }
 
@@ -323,7 +321,7 @@ nav {
                 border: none;
 
                 i {
-                    font-size: 20px;
+                    font-size: 15px;
                     color: #12151ef6;
                 }
             }
@@ -336,6 +334,13 @@ nav {
             margin-top: 20px;
             padding: 10px;
             overflow-y: auto;
+
+            .empty-msg {
+                font-size: 16px;
+                text-align: center;
+                margin-top: 20px;
+                user-select: none;
+            }
 
             &::-webkit-scrollbar {
                 width: 5px;
@@ -350,33 +355,92 @@ nav {
                 border-radius: 10px;
             }
 
-            div {
+            .task {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                position: relative;
                 background-color: #fff;
-                padding: 10px;
+                padding: 10px 0 10px 20px;
                 width: 100%;
                 color: #12151ef6;
                 border-radius: 10px;
                 margin: 10px 0;
-                transition: 0.3s;
+                transition: 0.5s;
+                font-size: 18px;
 
-                &:hover {
-                    background-color: #ffffffea;
+                &.completed {
+                    color: gray;
+                    opacity: 0.7;
+                    &::before {
+                        display: block;
+                    }
                 }
 
-                .close {
-                    font-size: 18px;
-                    cursor: pointer;
+                &:before {
+                    content: '';
+                    display: none;
+                    position: absolute;
+                    top: calc(50% - 1px);
+                    left: 12px;
+                    width: calc(100% - 12px);
+                    height: 2px;
+                    background-color: gray;
+                }
+
+
+                &:hover {
+                    background-color: #d1d1d1;
+                    .icons {
+                        background-color: #d1d1d1;
+                    }
+                }
+
+                .icons {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 20px;
+                    width: min-content;
+                    background-color: #fff;
+                    z-index: 2;
+                    padding: 0 20px 0 15px;
+                    transition: 0.5s;
+
+                    .icon-cross,
+                    .icon-checkmark {
+                        cursor: pointer;
+                    }
+
+                    .icon-cross {
+                        font-size: 16px;
+                    }
+
+                    .icon-checkmark {
+                        font-size: 20px;
+                    }
                 }
             }
         }
     }
 }
 
-// End Todo
-// Start Wallpaper
+/* End Todo */
+
+#nextPrayer {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+
+    &.active {
+        display: block;
+    }
+}
+
+/* Start Settings */
 .settingsIcon {
     position: absolute;
     bottom: 20px;
@@ -390,12 +454,54 @@ nav {
     }
 }
 
+.custom-checkbox {
+    font-size: 16px;
+
+    input {
+        display: none;
+    }
+
+    .checkmark {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background-color: #eee;
+        border-radius: 50%;
+        vertical-align: middle;
+        position: relative;
+        margin-right: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    input:checked+.checkmark {
+        background-color: #A08963;
+    }
+
+    .checkmark::after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 8px;
+        top: 4px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3.5px 3.5px 0;
+        transform: rotate(45deg);
+    }
+
+    input:checked+.checkmark::after {
+        display: block;
+    }
+}
+
 .settings {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 800px;
-    height: 500px;
+    height: 700px;
     background-color: #12151ef6;
     padding: 40px;
     border-radius: 10px;
@@ -405,6 +511,7 @@ nav {
     transform: translate(-50%, -50%) scale(0.8);
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
     z-index: 10;
+    overflow-y: auto;
 
     &.show {
         opacity: 1;
@@ -412,11 +519,11 @@ nav {
         transform: translate(-50%, -50%) scale(1);
     }
 
-    .close {
+    .icon-cross {
         position: absolute;
         top: 20px;
         right: 20px;
-        font-size: 20px;
+        font-size: 15px;
         cursor: pointer;
     }
 
@@ -425,59 +532,36 @@ nav {
         margin: 0 0 10px;
     }
 
-    .shortcuts {
-        label {
+
+    .nextPrayer {
+        margin-top: 30px;
+
+        label+p {
+            margin: 15px 0 5px;
+            font-size: 14px;
+        }
+
+        select {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #fff;
             font-size: 16px;
-        }
-
-        .custom-checkbox input {
-            display: none;
-        }
-
-        .custom-checkbox .checkmark {
-            display: inline-block;
-            width: 25px;
-            height: 25px;
-            background-color: #eee;
-            border-radius: 50%;
-            vertical-align: middle;
-            position: relative;
-            margin-right: 8px;
+            color: #000;
             cursor: pointer;
-            transition: 0.2s;
-        }
+            outline: none;
 
-        .custom-checkbox input:checked+.checkmark {
-            background-color: #A08963;
+            option:hover {
+                background-color: #4CAF50;
+                color: #fff;
+            }
         }
-
-        .custom-checkbox .checkmark::after {
-            content: "";
-            position: absolute;
-            display: none;
-            left: 8px;
-            top: 4px;
-            width: 5px;
-            height: 10px;
-            border: solid white;
-            border-width: 0 3.5px 3.5px 0;
-            transform: rotate(45deg);
-        }
-
-        .custom-checkbox input:checked+.checkmark::after {
-            display: block;
-        }
-
     }
 
     .wallpaper {
         margin-top: 30px;
 
         .drop-zone {
-            // position: absolute;
-            // top: 50%;
-            // left: 50%;
-            // transform: translate(-50%, -50%);
             max-width: 220px;
             height: 200px;
             padding: 25px;
@@ -526,8 +610,30 @@ nav {
         }
     }
 
+    .logout {
+        button {
+            display: block;
+            margin: 0 auto;
+            width: 80px;
+            height: 35px;
+            font-size: 16px;
+            background-color: #A08963;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.5s;
+            border: 2px solid #A08963;
 
+            &:hover {
+                background-color: transparent;
+                color: #A08963;
+            }
+        }
+    }
 }
 
-// End Wallpaper
-// End Landing
+/* End Settings */
+
+
+/* End Landing */

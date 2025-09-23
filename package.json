@@ -1,41 +1,28 @@
 {
-  "scripts": {
-    "start": "node server.js"
-  },
-  "name": "quote-tab",
-  "description": "Awesome Extension for Google Chrome New Tab",
-  "version": "2.3.3",
-  "main": "gulpfile.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kareem-m/Quote-Tab.git"
-  },
-  "keywords": [
-    "chrome-extension"
-  ],
-  "author": "Kareem Elramady",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kareem-m/Quote-Tab/issues"
-  },
-  "homepage": "https://github.com/kareem-m/Quote-Tab#readme",
-  "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^8.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-livereload": "^4.0.2",
-    "gulp-pug": "^5.0.0",
-    "gulp-sass": "^5.1.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-uglify": "^3.0.2",
-    "gulp-zip": "^5.1.0",
-    "sass": "^1.49.9"
-  },
-  "dependencies": {
-    "static-server": "^2.2.1"
-  },
-  "browserslist": [
-    "last 2 version",
-    "> 2%"
-  ]
+    "scripts": {
+        "start": "node server.js"
+    },
+    "name": "quote-tab",
+    "description": "Awesome Extension for Google Chrome New Tab",
+    "version": "2.3.3",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kareem-m/Quote-Tab.git"
+    },
+    "keywords": [
+        "chrome-extension"
+    ],
+    "author": "Kareem Elramady",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kareem-m/Quote-Tab/issues"
+    },
+    "homepage": "https://github.com/kareem-m/Quote-Tab#readme",
+    "dependencies": {
+        "static-server": "^2.2.1"
+    },
+    "browserslist": [
+        "last 2 version",
+        "> 2%"
+    ]
 }

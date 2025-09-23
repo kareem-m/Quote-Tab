@@ -1,12 +1,11 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    
     // Get version from API
     if (request.action === "checkUpdate") {
         fetch("https://quote-tab.netlify.app/update-info.json")
             .then(res => res.json())
             .then(data => sendResponse({ success: true, version: data.latest_version }))
             .catch(err => sendResponse({ success: false, error: err.message }));
-        return true; // مهم جدًا
+        return true;
     }
 
     // Brawsing History
