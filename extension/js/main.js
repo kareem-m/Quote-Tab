@@ -12,7 +12,7 @@ document.getElementById("logout").addEventListener("click", () => {
 
 
 // Update Popup
-const currentVersion = "2.3.3";
+const currentVersion = "3.0";
 
 chrome.runtime.sendMessage({ action: "checkUpdate" }, (response) => {
     if (response.success) {
@@ -340,6 +340,10 @@ function createTaskElement(id, title, completed = false) {
 // Toggle completed
 async function toggleTaskCompleted(taskId, newStatus, div, toggleBtn) {
     if (newStatus) {
+        // Play sound effect
+        const audio = new Audio("images/sound.mp3");
+        audio.play();
+
         div.classList.add("completed");
         tasksDiv.appendChild(div);
     } else {
@@ -435,115 +439,6 @@ todoInput.addEventListener("keypress", function (event) {
 
 // When page reload
 getTasksFromAPI();
-
-
-
-/* Old (Local Storage)
-
-// Todo List
-const todoInput = document.querySelector(".todoInput"),
-    todoButton = document.querySelector(".todoButton"),
-    todoButtonClear = document.querySelector(".todoButtonClear"),
-    tasksDiv = document.querySelector(".tasks");
-
-let tasks = [];
-
-if (localStorage.getItem("tasks")) {
-    tasks = JSON.parse(localStorage.getItem("tasks"));
-}
-
-getDataFromLocalStorage()
-
-// click on button by enter key
-todoInput.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        todoButton.click();
-    }
-});
-
-todoButton.addEventListener("click", () => {
-    if (todoInput !== "") {
-        addTasksToArray()
-        todoInput.value = "";
-    }
-});
-
-// Delete Tasks
-tasksDiv.addEventListener("click", (e) => {
-    if (e.target.classList.contains("close")) {
-        // remove from localstorage
-        delTask(e.target.parentElement.getAttribute("data-id"));
-        // remove from page
-        e.target.parentElement.remove();
-    }
-});
-
-// Clear Tasks
-todoButtonClear.addEventListener("click", () => {
-    tasksDiv.innerHTML = "There are no tasks";
-    localStorage.removeItem("tasks");
-    tasks = [];
-});
-
-// push task into array of tasks
-function addTasksToArray() {
-    const task = {
-        id: Date.now(),
-        title: todoInput.value,
-    };
-    tasks.push(task);
-
-    addTasksToPage();
-    addTasksToLocalStorage();
-}
-
-// add tasks into page
-function addTasksToPage() {
-    tasksDiv.innerHTML = "";
-    tasks.forEach((task) => {
-
-        // Chick if task is done
-        if (task.completed) {
-            div.classList.add("done");
-        }
-
-        // make main div
-        const div = document.createElement("div");
-        div.setAttribute("data-id", task.id);
-        div.innerHTML = task.title;
-
-        // make delete button
-        const delButton = document.createElement("i");
-        delButton.className = "close";
-        div.appendChild(delButton);
-
-        tasksDiv.appendChild(div);
-    });
-}
-
-// To add Tasks to localstorage
-function addTasksToLocalStorage() {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-// To Get data from localstorage
-function getDataFromLocalStorage() {
-    let data = localStorage.getItem("tasks");
-    if (data) {
-        let tasks = JSON.parse(data);
-        addTasksToPage();
-    }
-}
-
-// delete tasks from localstorage
-function delTask(taskId) {
-    tasks = tasks.filter((task) => task.id != taskId);
-    addTasksToLocalStorage();
-}
-
-*/
-
 
 
 // Click settings icon
@@ -772,4 +667,4 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 // Console message
-// console.log('%c Developed by: Eng. Kareem Elramady https://kareem.is-a.dev', 'background: white; color: black; padding: 10px; border: 1px solid black; font-size: 16px; border-radius: 10px;');
+console.log('%c Developed by: Eng. Kareem Elramady https://kareem.is-a.dev', 'background: white; color: black; padding: 10px; border: 1px solid black; font-size: 16px; border-radius: 10px;');

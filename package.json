@@ -4,7 +4,7 @@
     },
     "name": "quote-tab",
     "description": "Awesome Extension for Google Chrome New Tab",
-    "version": "2.3.3",
+    "version": "3.0",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/kareem-m/Quote-Tab.git"
@@ -18,9 +18,6 @@
         "url": "https://github.com/kareem-m/Quote-Tab/issues"
     },
     "homepage": "https://github.com/kareem-m/Quote-Tab#readme",
-    "dependencies": {
-        "static-server": "^2.2.1"
-    },
     "browserslist": [
         "last 2 version",
         "> 2%"
