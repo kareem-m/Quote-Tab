@@ -1,4 +1,4 @@
-const API_URL = "https://quote-tab-test.vercel.app/api/auth/login";
+const API_URL = "https://quote-tab-backend.vercel.app/api/auth/login";
 
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();

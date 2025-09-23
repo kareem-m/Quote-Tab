@@ -248,7 +248,7 @@ const todoInput = document.querySelector(".todoInput"),
     todoButtonClear = document.querySelector(".todoButtonClear"),
     tasksDiv = document.querySelector(".tasks");
 
-const API_URL = "https://quote-tab-test.vercel.app/api/todos";
+const API_URL = "https://quote-tab-backend.vercel.app/api/todos";
 
 // Create empty message element
 const emptyMsg = document.createElement("p");
