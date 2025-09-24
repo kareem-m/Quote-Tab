@@ -1,0 +1,85 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:quote_tab_todo/screens/login_screen.dart';
+import 'package:quote_tab_todo/screens/todo_list_screen.dart';
+import 'package:quote_tab_todo/widgets/loading_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Quote Tab Todo',
+      theme: ThemeData(
+        textTheme: GoogleFonts.cairoTextTheme()
+            .apply(bodyColor: Colors.white, displayColor: Colors.white),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF11151E)),
+      ),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+
+  late final String currentUsername;
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentUsername();
+    _checkLoginAndNavigate();
+  }
+
+  Future<void> _getCurrentUsername() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    currentUsername = prefs.getStringList('currentUser')?[0] ?? 'unknown';
+  }
+
+  Future<void> _checkLoginAndNavigate() async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+      // Add a small delay to ensure everything is loaded
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => isLoggedIn 
+                ? TodoListScreen(username: currentUsername,) 
+                : const LoginScreen(),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Color(0xFF11151E),
+      body: LoadingWidget(),
+    );
+  }
+}
