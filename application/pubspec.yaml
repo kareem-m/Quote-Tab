@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.5.3
   uuid: ^4.5.1
   audioplayers: ^6.5.1
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -99,8 +100,8 @@ flutter_native_splash:
   ios: true
 
   color: "#12161f"
-  image: "assets/images/logo.png"
+  image: "assets/images/new_logo.png"
 
   android_12:
     color: "#12161f"
-    image: "assets/images/logo.png"
+    image: "assets/images/new_logo.png"
