@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="quote_tab_todo"
+        android:label="Quote Tab Todo"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
