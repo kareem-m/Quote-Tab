@@ -5,6 +5,7 @@ import 'package:quote_tab_todo/services/sound_effects.dart';
 import 'package:quote_tab_todo/services/todo_service.dart';
 import 'package:quote_tab_todo/util/constants.dart';
 import 'package:quote_tab_todo/widgets/loading_widget.dart';
+import 'package:quote_tab_todo/widgets/task_item.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -48,10 +49,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: appBarColor,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: const Text(
@@ -113,144 +113,92 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     //listView
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return Stack(
-                          children: [
-                            Container(
-                              height: 60,
-                              margin: EdgeInsets.only(
-                                left: 12,
-                                right: 12,
-                                top: 12,
-                                bottom: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: todos[index]['completed'] == false ? Colors.white : completedTaskColor,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(width: 20),
-                                        Text(
-                                          todos[index]['title'],
-                                          style: TextStyle(
-                                            color: todos[index]['completed'] == false ? Colors.black : completedLineColor,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        //check
-                                        IconButton(
-                                          onPressed: () async {
-                                            final todoBeforeUpdate = todos[index];
-                                            bool lastState = todos[index]['completed'];
-                                            if(lastState == false){
-                                              await SoundEffects.done();
-                                            } 
-                                            setState(() {
-                                              todos[index]['completed'] =
-                                                  !todos[index]['completed'];
-                                              todos.sort((a, b) => a['completed'].toString().compareTo(b['completed'].toString()));
-                                            });
-                                            final success = await TodoService.changeCompleted(todoBeforeUpdate['_id'], !lastState);
-
-                                            if(!success && mounted){
-                                              setState(() {
-                                                todos[index]['completed'] =
-                                                  !todos[index]['completed'];
-                                              });
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) => AlertDialog(
-                                                  backgroundColor: mainAppColor,
-                                                  title: const Text('Error'),
-                                                  content: const Text(
-                                                    'Failed to check your task, Please try again.',
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                            context,
-                                                          ),
-                                                      child: const Text('OK'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-
-                                            }
-                                          },
-                                          icon: const Icon(
-                                            Icons.check,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        //delete
-                                        IconButton(
-                                          onPressed: () async {
-                                            dynamic taskTodelete = todos[index];
-                                            setState(() {
-                                              todos.removeAt(index);
-                                            });
-
-                                            final bool success =
-                                                await TodoService.deleteTodo(
-                                                  taskTodelete['_id'],
-                                                );
-                                            if (!success && mounted) {
-                                              setState(() {
-                                                todos.insert(
-                                                  index,
-                                                  taskTodelete,
-                                                );
-                                              });
-
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) => AlertDialog(
-                                                  backgroundColor: mainAppColor,
-                                                  title: const Text('Error'),
-                                                  content: const Text(
-                                                    'Failed to delete, Please try again.',
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                            context,
-                                                          ),
-                                                      child: const Text('OK'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            }
-                                          },
-                                          icon: const Icon(
-                                            Icons.close,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
+                        return TaskItem(
+                          todo: todos[index],
+                          onCompleted: () async {
+                            //باخد نسخة عشان لما اغير ترتيبها في الواجهة اعرف اخد برضو البيانات و ماخدهاش بال index
+                            final todoBeforeUpdate = todos[index];
+                            bool lastState = todos[index]['completed'];
+                            //play soundeffect
+                            if (lastState == false) {
+                              await SoundEffects.done();
+                            }
+                            //change in ui first
+                            setState(() {
+                              todos[index]['completed'] =
+                                  !todos[index]['completed'];
+                              todos.sort(
+                                (a, b) => a['completed'].toString().compareTo(
+                                  b['completed'].toString(),
+                                ),
+                              );
+                            });
+                            //server request
+                            final success = await TodoService.changeCompleted(
+                              todoBeforeUpdate['_id'],
+                              !lastState,
+                            );
+                            //if request failed
+                            if (!success && mounted) {
+                              setState(() {
+                                todos[index]['completed'] =
+                                    !todos[index]['completed'];
+                              });
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  backgroundColor: mainAppColor,
+                                  title: const Text('Error'),
+                                  content: const Text(
+                                    'Failed to check your task, Please try again.',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('OK'),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                            if (todos[index]['completed'] == true)
-                              Positioned(
-                                bottom: 30,
-                                left: 20,
-                                child: Container(color: completedLineColor, width: size.width * 3 / 5, height: 4,))
-                          ],
+                              );
+                            }
+                          },
+                          onDeleted: () async {
+                            //باخد نسخة عشان لما امسح اعرف يبقى معايا ال id
+                            dynamic taskTodelete = todos[index];
+                            //remove from ui
+                            setState(() {
+                              todos.removeAt(index);
+                            });
+
+                            //delete request
+                            final bool success = await TodoService.deleteTodo(
+                              taskTodelete['_id'],
+                            );
+
+                            //if request failed
+                            if (!success && mounted) {
+                              setState(() {
+                                todos.insert(index, taskTodelete);
+                              });
+
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  backgroundColor: mainAppColor,
+                                  title: const Text('Error'),
+                                  content: const Text(
+                                    'Failed to delete, Please try again.',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
                         );
                       },
                       itemCount: todos.length,
@@ -260,9 +208,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
               ],
             ),
             if (isLoading)
-              LoadingWidget(
-                color: const Color.fromARGB(255, 34, 42, 60),
-              ),
+              LoadingWidget(color: const Color.fromARGB(255, 34, 42, 60)),
           ],
         ),
       ),
@@ -273,20 +219,26 @@ class _TodoListScreenState extends State<TodoListScreen> {
         child: FloatingActionButton(
           onPressed: () {
             Future.delayed(const Duration(milliseconds: 50), () {
-              _newTodoFocusNode.requestFocus();
+              setState(() {
+                _newTodoFocusNode.requestFocus();
+              });
+              // _newTodoFocusNode.requestFocus();
             });
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
+              backgroundColor: Colors.transparent,
               builder: (context) {
                 return Padding(
                   padding: EdgeInsetsGeometry.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                    left: 15,
+                    right: 15
                   ),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     height: 50,
                     child: Padding(
@@ -308,15 +260,16 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               'completed': false,
                             };
                             //عشان يحط الجديدة فوق اول واحدة completed
-                            int firstCompletedIndex = todos.indexWhere((task) => task['completed'] == true);
+                            int firstCompletedIndex = todos.indexWhere(
+                              (task) => task['completed'] == true,
+                            );
                             setState(() {
                               //لو في completed حطها قبلها ولو مفيش حطها اخر واحدة
-                              if (firstCompletedIndex == -1){
+                              if (firstCompletedIndex == -1) {
                                 todos.add(newTodo);
-                              }
-                              else{
+                              } else {
                                 todos.insert(firstCompletedIndex, newTodo);
-                              } 
+                              }
                             });
 
                             final success = await TodoService.setNewTodo(
