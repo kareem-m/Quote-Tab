@@ -1,14 +1,17 @@
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // for json
+import 'package:quote_tab_todo/models/user.dart';
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart'; // for json
 
 class SignupService {
-  final String usernameRegister;
-  final String passwordRegister;
+  // final String usernameRegister;
+  // final String passwordRegister;
+  final User user;
   late final http.Response finalResponse;
 
   SignupService({
-    required this.usernameRegister,
-    required this.passwordRegister,
+    required this.user
   });
 
   Future<void> registerUser() async {
@@ -17,8 +20,8 @@ class SignupService {
     );
 
     final Map<String, String> userData = {
-      'username': usernameRegister,
-      'password': passwordRegister,
+      'username': user.username,
+      'password': user.password,
     };
 
     try {
@@ -35,5 +38,11 @@ class SignupService {
     } catch (e) {
       print('خطأ في الاتصال');
     }
+  }
+  Future<void> setLoginOnStorage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', true);
+    prefs.setStringList('currentUser', [user.username, user.password]);
+    prefs.setString('token', jsonDecode(finalResponse.body)['token']);
   }
 }

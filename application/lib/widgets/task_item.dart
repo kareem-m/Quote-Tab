@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quote_tab_todo/models/task.dart';
 import 'package:quote_tab_todo/util/constants.dart';
 
 class TaskItem extends StatelessWidget {
-  final Map<String, dynamic> todo;
+  final Task todo;
   final VoidCallback onCompleted;
   final VoidCallback onDeleted;
 
@@ -22,7 +23,7 @@ class TaskItem extends StatelessWidget {
           height: 60,
           margin: EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 6),
           decoration: BoxDecoration(
-            color: todo['completed'] == false
+            color: todo.completed == false
                 ? Colors.white
                 : completedTaskColor,
             borderRadius: BorderRadius.circular(20),
@@ -35,9 +36,9 @@ class TaskItem extends StatelessWidget {
                   children: [
                     SizedBox(width: 20),
                     Text(
-                      todo['title'],
+                      todo.title,
                       style: TextStyle(
-                        color: todo['completed'] == false
+                        color: todo.completed == false
                             ? Colors.black
                             : completedLineColor,
                         fontWeight: FontWeight.bold,
@@ -69,7 +70,7 @@ class TaskItem extends StatelessWidget {
             ),
           ),
         ),
-        if (todo['completed'] == true)
+        if (todo.completed == true)
           Positioned(
             bottom: 30,
             left: 20,

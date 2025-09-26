@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quote_tab_todo/models/task.dart';
 import 'package:quote_tab_todo/screens/login_screen.dart';
 import 'package:quote_tab_todo/services/login_service.dart';
 import 'package:quote_tab_todo/services/sound_effects.dart';
@@ -18,12 +19,15 @@ class TodoListScreen extends StatefulWidget {
 
 class _TodoListScreenState extends State<TodoListScreen> {
   bool isLoading = false;
+
+  late List<Task> todos = [];
+  
   final FocusNode _newTodoFocusNode = FocusNode();
-  late List<dynamic> todos = [];
-  final _todoController = TextEditingController();
+  late final TextEditingController _todoController;
   @override
   void initState() {
     super.initState();
+    _todoController = TextEditingController();
     _initializeTodos();
   }
 
@@ -38,11 +42,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
     setState(() {
       isLoading = true;
     });
+
+    //json decoded list ----> list<Map<String, dynamic>>
     final fetchedTodos = await TodoService.getTodos();
+
     if (mounted) {
       setState(() {
         isLoading = false;
-        todos = fetchedTodos;
+        todos = fetchedTodos.map((t) => Task(id: t['_id'], title: t['title'], completed: t['completed'])).toList();
       });
     }
   }
@@ -60,7 +67,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ),
         leading: IconButton(
           onPressed: () {
-            LoginService.setLogout();
+            LoginService.setLogoutOnStorage();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -117,32 +124,30 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           todo: todos[index],
                           onCompleted: () async {
                             //باخد نسخة عشان لما اغير ترتيبها في الواجهة اعرف اخد برضو البيانات و ماخدهاش بال index
-                            final todoBeforeUpdate = todos[index];
-                            bool lastState = todos[index]['completed'];
+                            final taskToUpdate = todos[index];
                             //play soundeffect
-                            if (lastState == false) {
+                            if (taskToUpdate.completed == false) {
                               await SoundEffects.done();
                             }
                             //change in ui first
                             setState(() {
-                              todos[index]['completed'] =
-                                  !todos[index]['completed'];
+                              todos[index].completed =
+                                  !todos[index].completed;
                               todos.sort(
-                                (a, b) => a['completed'].toString().compareTo(
-                                  b['completed'].toString(),
+                                (a, b) => a.completed.toString().compareTo(
+                                  b.completed.toString(),
                                 ),
                               );
                             });
                             //server request
                             final success = await TodoService.changeCompleted(
-                              todoBeforeUpdate['_id'],
-                              !lastState,
+                              taskToUpdate
                             );
                             //if request failed
                             if (!success && mounted) {
                               setState(() {
-                                todos[index]['completed'] =
-                                    !todos[index]['completed'];
+                                todos[index].completed =
+                                    !todos[index].completed;
                               });
                               showDialog(
                                 context: context,
@@ -164,7 +169,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           },
                           onDeleted: () async {
                             //باخد نسخة عشان لما امسح اعرف يبقى معايا ال id
-                            dynamic taskTodelete = todos[index];
+                            final taskTodelete = todos[index];
                             //remove from ui
                             setState(() {
                               todos.removeAt(index);
@@ -172,7 +177,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
                             //delete request
                             final bool success = await TodoService.deleteTodo(
-                              taskTodelete['_id'],
+                              taskTodelete,
                             );
 
                             //if request failed
@@ -254,14 +259,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             _todoController.clear();
                             final uuid = Uuid();
                             final newid = uuid.v1();
-                            final newTodo = {
-                              '_id': newid,
-                              'title': value,
-                              'completed': false,
-                            };
+                            final newTodo = Task(id: newid, title: value, completed: false);
                             //عشان يحط الجديدة فوق اول واحدة completed
                             int firstCompletedIndex = todos.indexWhere(
-                              (task) => task['completed'] == true,
+                              (task) => task.completed == true,
                             );
                             setState(() {
                               //لو في completed حطها قبلها ولو مفيش حطها اخر واحدة
@@ -272,10 +273,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               }
                             });
 
-                            final success = await TodoService.setNewTodo(
-                              value,
-                              id: newid,
-                            );
+                            final success = await TodoService.setNewTodo(newTodo);
 
                             if (!success && mounted) {
                               setState(() {

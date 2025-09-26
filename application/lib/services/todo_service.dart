@@ -1,8 +1,7 @@
+import 'package:quote_tab_todo/models/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:uuid/uuid.dart';
 
 
 class TodoService {
@@ -33,8 +32,7 @@ class TodoService {
     }
   }
 
-  static Future<bool> setNewTodo(String todo, {String? id}) async {
-    final uuid = Uuid();
+  static Future<bool> setNewTodo(Task todo) async {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token')!;
@@ -42,9 +40,9 @@ class TodoService {
     final url = Uri.parse('https://quote-tab-backend.vercel.app/api/todos');
 
     final Map<String, dynamic> todoData = {
-      '_id' : id ?? uuid.v1(),
-      'title': todo,
-      'completed' : false
+      '_id' : todo.id,
+      'title': todo.title,
+      'completed' : todo.completed
     };
 
     try {
@@ -71,11 +69,11 @@ class TodoService {
     }
   }
 
-  static Future<bool> deleteTodo(String id) async {
+  static Future<bool> deleteTodo(Task todo) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token')!;
 
-    final url = Uri.parse('https://quote-tab-backend.vercel.app/api/todos?id=$id');
+    final url = Uri.parse('https://quote-tab-backend.vercel.app/api/todos?id=${todo.id}');
 
     try{
       final response = await http.delete(
@@ -99,14 +97,14 @@ class TodoService {
       return false;
     }
 }
-  static Future<bool> changeCompleted(String id, bool changeTo) async {
+  static Future<bool> changeCompleted(Task todo) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token')!;
 
-    final url = Uri.parse('https://quote-tab-backend.vercel.app/api/todos?id=$id');
+    final url = Uri.parse('https://quote-tab-backend.vercel.app/api/todos?id=${todo.id}');
 
     final Map<String, bool> changeData = {
-      'completed' : changeTo
+      'completed' : !todo.completed
     };
 
     try{

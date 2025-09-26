@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:quote_tab_todo/models/user.dart';
 import 'package:quote_tab_todo/screens/login_screen.dart';
 import 'package:quote_tab_todo/screens/todo_list_screen.dart';
-import 'package:quote_tab_todo/services/login_service.dart';
 import 'package:quote_tab_todo/services/signup_service.dart';
 import 'package:quote_tab_todo/util/constants.dart';
 import 'package:quote_tab_todo/widgets/loading_widget.dart';
@@ -93,11 +93,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
+                              final registerUser = User(usernameController.text, passwordController.text);
                               //عملت الobject
-                              final signupInstance = SignupService(
-                                usernameRegister: usernameController.text,
-                                passwordRegister: passwordController.text,
-                              );
+                              final signupInstance = SignupService(user: registerUser);
 
                               setState(() {
                                 isLoading = true;
@@ -135,11 +133,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                 );
                               } else {
-                                final LoginService loginInstance = LoginService(
-                                  usernameLogin: usernameController.text,
-                                  passwordLogin: passwordController.text,
-                                );
-                                loginInstance.setLogin();
+                                await signupInstance.setLoginOnStorage();
 
                                 Navigator.pushReplacement(
                                   context,

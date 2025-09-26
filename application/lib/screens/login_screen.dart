@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:quote_tab_todo/models/user.dart';
 import 'package:quote_tab_todo/screens/signup_screen.dart';
 import 'package:quote_tab_todo/screens/todo_list_screen.dart';
 import 'package:quote_tab_todo/services/login_service.dart';
@@ -92,10 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              final loginInstance = LoginService(
-                                usernameLogin: usernameController.text,
-                                passwordLogin: passwordController.text,
-                              );
+                              final user = User(usernameController.text, passwordController.text);
+                              final loginInstance = LoginService(user: user);
 
                               setState(() {
                                 isLoading = true;
@@ -133,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                 );
                               } else {
-                                loginInstance.setLogin();
+                                await loginInstance.setLoginOnStorage();
 
                                 Navigator.pushReplacement(
                                   context,

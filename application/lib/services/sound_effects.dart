@@ -13,9 +13,6 @@ class SoundEffects {
           contentType: AndroidContentType.sonification,
           audioFocus: AndroidAudioFocus.gainTransientMayDuck
         ),
-        iOS: AudioContextIOS(category: AVAudioSessionCategory.ambient, options: {
-          AVAudioSessionOptions.mixWithOthers,
-        })
       ),
     );
   }
