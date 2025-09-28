@@ -23,7 +23,7 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
   bool isLoading = false;
 
   late List<Task> todos = [];
-  
+
   final FocusNode _newTodoFocusNode = FocusNode();
   late final TextEditingController _todoController;
   @override
@@ -33,7 +33,6 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
     _todoController = TextEditingController();
     // _refreshTodos();  ---> from the server
     loadTodos(); // ---> loads locally
-    
   }
 
   @override
@@ -49,7 +48,8 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
       //saves locally
       saveTodos();
     }
@@ -71,7 +71,7 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
     setState(() {
       todos.addAll(tasksBox.values);
     });
-    if(!(prefs.getBool('usedOnce') ?? false)){
+    if (!(prefs.getBool('usedOnce') ?? false)) {
       _refreshTodos();
     }
   }
@@ -87,7 +87,15 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
     if (mounted) {
       setState(() {
         isLoading = false;
-        todos = fetchedTodos.map((t) => Task(id: t['_id'], title: t['title'], completed: t['completed'])).toList();
+        todos = fetchedTodos
+            .map(
+              (t) => Task(
+                id: t['_id'],
+                title: t['title'],
+                completed: t['completed'],
+              ),
+            )
+            .toList();
       });
     }
   }
@@ -181,7 +189,7 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
                               });
                               //server request
                               final success = await TodoService.changeCompleted(
-                                taskToUpdate
+                                taskToUpdate,
                               );
                               //if request failed
                               if (!success && mounted) {
@@ -214,18 +222,18 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
                               setState(() {
                                 todos.removeAt(index);
                               });
-                      
+
                               //delete request
                               final bool success = await TodoService.deleteTodo(
                                 taskTodelete,
                               );
-                      
+
                               //if request failed
                               if (!success && mounted) {
                                 setState(() {
                                   todos.insert(index, taskTodelete);
                                 });
-                      
+
                                 showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
@@ -259,95 +267,154 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
         ),
       ),
 
-      //add new task
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FloatingActionButton(
-          onPressed: () {
-            Future.delayed(const Duration(milliseconds: 50), () {
-              setState(() {
-                _newTodoFocusNode.requestFocus();
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          //trash all
+          FloatingActionButton(
+            backgroundColor: const Color.fromARGB(194, 252, 104, 93),
+            onPressed: () async {
+              final List<Task> todosCopy = List.from(todos);
+              bool allDeleted = true;
+              for (Task task in todosCopy) {
+                setState(() {
+                  isLoading = true;
+                });
+                final success = await TodoService.deleteTodo(task);
+                if (!success) {
+                  allDeleted = false;
+                  break;
+                }
+              }
+              if (mounted) {
+                setState(() {
+                  isLoading = false;
+                });
+              }
+
+              if (allDeleted) {
+                setState(() {
+                  todos.clear();
+                });
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: mainAppColor,
+                      title: const Text('Error'),
+                      content: const Text('Failed To delete, Please try again'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: Icon(Icons.delete),
+          ),
+          SizedBox(width: 20),
+          //add new task
+          FloatingActionButton(
+            backgroundColor: const Color.fromARGB(174, 118, 168, 254),
+            onPressed: () {
+              Future.delayed(const Duration(milliseconds: 50), () {
+                setState(() {
+                  _newTodoFocusNode.requestFocus();
+                });
+                // _newTodoFocusNode.requestFocus();
               });
-              // _newTodoFocusNode.requestFocus();
-            });
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              builder: (context) {
-                return Padding(
-                  padding: EdgeInsetsGeometry.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-                    left: 15,
-                    right: 15
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return Padding(
+                    padding: EdgeInsetsGeometry.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                      left: 15,
+                      right: 15,
                     ),
-                    height: 50,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Center(
-                        child: TextField(
-                          focusNode: _newTodoFocusNode,
-                          controller: _todoController,
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(border: InputBorder.none),
-                          onSubmitted: (value) async {
-                            Navigator.pop(context);
-                            _todoController.clear();
-                            final uuid = Uuid();
-                            final newid = uuid.v1();
-                            final newTodo = Task(id: newid, title: value, completed: false);
-                            //عشان يحط الجديدة فوق اول واحدة completed
-                            int firstCompletedIndex = todos.indexWhere(
-                              (task) => task.completed == true,
-                            );
-                            setState(() {
-                              //لو في completed حطها قبلها ولو مفيش حطها اخر واحدة
-                              if (firstCompletedIndex == -1) {
-                                todos.add(newTodo);
-                              } else {
-                                todos.insert(firstCompletedIndex, newTodo);
-                              }
-                            });
-
-                            final success = await TodoService.setNewTodo(newTodo);
-
-                            if (!success && mounted) {
-                              setState(() {
-                                todos.removeAt(firstCompletedIndex);
-                              });
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  backgroundColor: mainAppColor,
-                                  title: Text('Error'),
-                                  content: Text(
-                                    'Failed to add a new task, Please try again.',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      height: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Center(
+                          child: TextField(
+                            focusNode: _newTodoFocusNode,
+                            controller: _todoController,
+                            style: TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                            onSubmitted: (value) async {
+                              Navigator.pop(context);
+                              _todoController.clear();
+                              final uuid = Uuid();
+                              final newid = uuid.v1();
+                              final newTodo = Task(
+                                id: newid,
+                                title: value,
+                                completed: false,
                               );
-                            }
-                          },
+                              //عشان يحط الجديدة فوق اول واحدة completed
+                              int firstCompletedIndex = todos.indexWhere(
+                                (task) => task.completed == true,
+                              );
+                              setState(() {
+                                //لو في completed حطها قبلها ولو مفيش حطها اخر واحدة
+                                if (firstCompletedIndex == -1) {
+                                  todos.add(newTodo);
+                                } else {
+                                  todos.insert(firstCompletedIndex, newTodo);
+                                }
+                              });
+
+                              final success = await TodoService.setNewTodo(
+                                newTodo,
+                              );
+
+                              if (!success && mounted) {
+                                setState(() {
+                                  todos.removeAt(firstCompletedIndex);
+                                });
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    backgroundColor: mainAppColor,
+                                    title: Text('Error'),
+                                    content: Text(
+                                      'Failed to add a new task, Please try again.',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-            );
-          },
-          child: Icon(Icons.add),
-        ),
+                  );
+                },
+              );
+            },
+            child: Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
