@@ -1,19 +1,38 @@
-<img src="https://kareem.is-a.dev/img/projects/quoteTab.png" style="border-radius: 10px"></img>
+<img src="https://kareem.is-a.dev/img/projects/quoteTab.png" style="border-radius: 10px">
 
 <br>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/kareem-m/Quote-Tab/main/public/icons/icon_128.png"></img>
+  <img src="https://raw.githubusercontent.com/kareem-m/Quote-Tab/main/public/icons/icon_128.png">
 
 # Quote-Tab
-### Quote tab is an extension for google chrome that allows you to change the look of the traditional new tab and make it better and show you a beautiful quote daily.
+### Quote-Tab is a cross-platform project (Chrome Extension & Mobile App) that transforms your new tab into a source of daily inspiration, displaying a beautiful, curated quote every day.
 </div>
 <br>
 
-## How To Use It ?
-- First, download ["quote-tap.zip"](https://quote-tab.netlify.app/) file to your computer & extract it
-- Second, enter this link into the Google Chrome browser
-  - chrome://extensions/
-- Then activate the "Developer mode" option, which is located in the top right
-- Then click on "load unpacked" and select the file you downloaded
-- And so it was downloaded, I wish you a wonderful experience
+## How To Use It? 🚀
+
+### For the Android App
+
+To download and use the mobile application:
+
+1.  Visit the official ["Quote Tab Website"](https://quote-tab.netlify.app/) on your Android device.
+2.  Click the **"Download Android App"** button (or the direct download link).
+3.  Install the downloaded file (APK) and enjoy your daily quotes on the go!
+
+---
+
+### For the Chrome Extension (Load Unpacked Method)
+
+1.  Go to the ["Quote Tab Website"](https://quote-tab.netlify.app/).
+2.  Click the **"Download Zip"** button or the direct download link available on the site.
+
+After downloading the Zip file from the website, follow these steps:
+
+1.  Open the Chrome extensions page by navigating to this link in your browser:
+    - `chrome://extensions/`
+2.  Activate the **"Developer mode"** option, which is located in the top right corner.
+3.  Click on **"Load unpacked"**.
+4.  Select the folder of the extension that you downloaded and unzipped.
+
+We wish you a wonderful experience with your daily quotes!
