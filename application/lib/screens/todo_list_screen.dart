@@ -156,95 +156,98 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
                     ),
 
                     //listView
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return TaskItem(
-                          todo: todos[index],
-                          onCompleted: () async {
-                            //باخد نسخة عشان لما اغير ترتيبها في الواجهة اعرف اخد برضو البيانات و ماخدهاش بال index
-                            final taskToUpdate = todos[index];
-                            //play soundeffect
-                            if (taskToUpdate.completed == false) {
-                              await SoundEffects.done();
-                            }
-                            //change in ui first
-                            setState(() {
-                              todos[index].completed =
-                                  !todos[index].completed;
-                              todos.sort(
-                                (a, b) => a.completed.toString().compareTo(
-                                  b.completed.toString(),
-                                ),
-                              );
-                            });
-                            //server request
-                            final success = await TodoService.changeCompleted(
-                              taskToUpdate
-                            );
-                            //if request failed
-                            if (!success && mounted) {
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return TaskItem(
+                            todo: todos[index],
+                            onCompleted: () async {
+                              //باخد نسخة عشان لما اغير ترتيبها في الواجهة اعرف اخد برضو البيانات و ماخدهاش بال index
+                              final taskToUpdate = todos[index];
+                              //play soundeffect
+                              if (taskToUpdate.completed == false) {
+                                await SoundEffects.done();
+                              }
+                              //change in ui first
                               setState(() {
                                 todos[index].completed =
                                     !todos[index].completed;
-                              });
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  backgroundColor: mainAppColor,
-                                  title: const Text('Error'),
-                                  content: const Text(
-                                    'Failed to check your task, Please try again.',
+                                todos.sort(
+                                  (a, b) => a.completed.toString().compareTo(
+                                    b.completed.toString(),
                                   ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
+                                );
+                              });
+                              //server request
+                              final success = await TodoService.changeCompleted(
+                                taskToUpdate
                               );
-                            }
-                          },
-                          onDeleted: () async {
-                            //باخد نسخة عشان لما امسح اعرف يبقى معايا ال id
-                            final taskTodelete = todos[index];
-                            //remove from ui
-                            setState(() {
-                              todos.removeAt(index);
-                            });
-
-                            //delete request
-                            final bool success = await TodoService.deleteTodo(
-                              taskTodelete,
-                            );
-
-                            //if request failed
-                            if (!success && mounted) {
+                              //if request failed
+                              if (!success && mounted) {
+                                setState(() {
+                                  todos[index].completed =
+                                      !todos[index].completed;
+                                });
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    backgroundColor: mainAppColor,
+                                    title: const Text('Error'),
+                                    content: const Text(
+                                      'Failed to check your task, Please try again.',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                            onDeleted: () async {
+                              //باخد نسخة عشان لما امسح اعرف يبقى معايا ال id
+                              final taskTodelete = todos[index];
+                              //remove from ui
                               setState(() {
-                                todos.insert(index, taskTodelete);
+                                todos.removeAt(index);
                               });
-
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  backgroundColor: mainAppColor,
-                                  title: const Text('Error'),
-                                  content: const Text(
-                                    'Failed to delete, Please try again.',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
+                      
+                              //delete request
+                              final bool success = await TodoService.deleteTodo(
+                                taskTodelete,
                               );
-                            }
-                          },
-                        );
-                      },
-                      itemCount: todos.length,
+                      
+                              //if request failed
+                              if (!success && mounted) {
+                                setState(() {
+                                  todos.insert(index, taskTodelete);
+                                });
+                      
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    backgroundColor: mainAppColor,
+                                    title: const Text('Error'),
+                                    content: const Text(
+                                      'Failed to delete, Please try again.',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        },
+                        itemCount: todos.length,
+                      ),
                     ),
                   ),
                 ),
