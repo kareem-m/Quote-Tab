@@ -24,6 +24,9 @@ To download and use the mobile application:
 
 ### For the Chrome Extension (Load Unpacked Method)
 
+1.  Go to the ["Quote Tab Website"](https://quote-tab.netlify.app/).
+2.  Click the **"Download Zip"** button or the direct download link available on the site.
+
 After downloading the Zip file from the website, follow these steps:
 
 1.  Open the Chrome extensions page by navigating to this link in your browser:
