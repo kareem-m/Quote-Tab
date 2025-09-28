@@ -3,7 +3,7 @@
 <br>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/kareem-m/Quote-Tab/main/public/icons/icon_128.png">
+  <img src="https://raw.githubusercontent.com/amrmhmd81/Quote_Tab/refs/heads/main/application/assets/images/1152.png"></img>
 
 # Quote-Tab
 ### Quote-Tab is a cross-platform project (Chrome Extension & Mobile App) that transforms your new tab into a source of daily inspiration, displaying a beautiful, curated quote every day.
