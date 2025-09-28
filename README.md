@@ -12,16 +12,6 @@
 
 ## How To Use It? 🚀
 
-### For the Android App
-
-To download and use the mobile application:
-
-1.  Visit the official ["Quote Tab Website"](https://quote-tab.netlify.app/) on your Android device.
-2.  Click the **"Download Android App"** button (or the direct download link).
-3.  Install the downloaded file (APK) and enjoy your daily quotes on the go!
-
----
-
 ### For the Chrome Extension (Load Unpacked Method)
 
 1.  Go to the ["Quote Tab Website"](https://quote-tab.netlify.app/).
@@ -36,3 +26,13 @@ After downloading the Zip file from the website, follow these steps:
 4.  Select the folder of the extension that you downloaded and unzipped.
 
 We wish you a wonderful experience with your daily quotes!
+
+---
+
+### For the Android App
+
+To download and use the mobile application:
+
+1.  Visit the official ["Quote Tab Website"](https://quote-tab.netlify.app/) on your Android device.
+2.  Click the **"Download Android App"** button (or the direct download link).
+3.  Install the downloaded file (APK) and enjoy your daily quotes on the go!
