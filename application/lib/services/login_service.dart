@@ -45,6 +45,7 @@ class LoginService {
   static Future<void> setLogoutOnStorage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLoggedIn', false);
+    prefs.setBool('usedOnce', true);
     prefs.setStringList('currentUser', ['', '']);
     prefs.setString('token', '');
   }

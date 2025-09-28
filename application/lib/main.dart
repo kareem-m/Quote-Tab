@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:quote_tab_todo/models/task.dart';
 import 'package:quote_tab_todo/screens/login_screen.dart';
 import 'package:quote_tab_todo/screens/todo_list_screen.dart';
 import 'package:quote_tab_todo/widgets/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskAdapter());
+  await Hive.openBox<Task>('tasksBox');
+
   runApp(const MyApp());
 }
 

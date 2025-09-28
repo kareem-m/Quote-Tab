@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:quote_tab_todo/models/task.dart';
 import 'package:quote_tab_todo/screens/login_screen.dart';
 import 'package:quote_tab_todo/services/login_service.dart';
@@ -7,6 +8,7 @@ import 'package:quote_tab_todo/services/todo_service.dart';
 import 'package:quote_tab_todo/util/constants.dart';
 import 'package:quote_tab_todo/widgets/loading_widget.dart';
 import 'package:quote_tab_todo/widgets/task_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -17,7 +19,7 @@ class TodoListScreen extends StatefulWidget {
   State<TodoListScreen> createState() => _TodoListScreenState();
 }
 
-class _TodoListScreenState extends State<TodoListScreen> {
+class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObserver{
   bool isLoading = false;
 
   late List<Task> todos = [];
@@ -27,18 +29,54 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _todoController = TextEditingController();
-    _initializeTodos();
+    // _refreshTodos();  ---> from the server
+    loadTodos(); // ---> loads locally
+    
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _newTodoFocusNode.dispose();
     _todoController.dispose();
     super.dispose();
   }
 
-  Future<void> _initializeTodos() async {
+  //when app closed then save todos locally
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
+      //saves locally
+      saveTodos();
+    }
+  }
+
+  void saveTodos() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('usedOnce', true);
+
+    final tasksBox = Hive.box<Task>('tasksBox');
+    tasksBox.clear();
+    tasksBox.addAll(todos);
+  }
+
+  void loadTodos() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final tasksBox = Hive.box<Task>('tasksBox');
+    setState(() {
+      todos.addAll(tasksBox.values);
+    });
+    if(!(prefs.getBool('usedOnce') ?? false)){
+      _refreshTodos();
+    }
+  }
+
+  Future<void> _refreshTodos() async {
     setState(() {
       isLoading = true;
     });
@@ -77,7 +115,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: _initializeTodos,
+            onPressed: _refreshTodos,
             icon: const Icon(Icons.refresh, color: Colors.white),
           ),
         ],
