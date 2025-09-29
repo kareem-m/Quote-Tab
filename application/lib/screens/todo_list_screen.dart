@@ -272,6 +272,7 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
         children: [
           //trash all
           FloatingActionButton(
+            heroTag: 'todo-fab',
             backgroundColor: const Color.fromARGB(194, 252, 104, 93),
             onPressed: () async {
               final List<Task> todosCopy = List.from(todos);

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class VersionService {
-  static Future<String> UpdateInfo () async {
+  static Future<String> androidVersion () async {
     final url = Uri.parse('https://quote-tab.netlify.app/update-info.json');
 
     try{
@@ -18,12 +18,12 @@ class VersionService {
       }
       else{
         print("failed request");
-        return "";
+        return "error";
       }
     }
     catch(e){
       print('Error Connection');
-      return "";
+      return "error";
     }
   }
 }
