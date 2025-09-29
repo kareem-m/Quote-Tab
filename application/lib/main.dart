@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:quote_tab_todo/models/task.dart';
 import 'package:quote_tab_todo/screens/login_screen.dart';
 import 'package:quote_tab_todo/screens/todo_list_screen.dart';
+import 'package:quote_tab_todo/services/version_service.dart';
 import 'package:quote_tab_todo/widgets/loading_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Hive.initFlutter();
   Hive.registerAdapter(TaskAdapter());
   await Hive.openBox<Task>('tasksBox');
@@ -49,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _getCurrentUsername();
     _checkLoginAndNavigate();
+    _checkAppVersion();
   }
 
   Future<void> _getCurrentUsername() async {
@@ -82,6 +87,13 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  Future<void> _checkAppVersion() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    final version = info.version;
+    final latestVersion = await VersionService.UpdateInfo();
+    print(version);
+    print(latestVersion);
+  }
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
