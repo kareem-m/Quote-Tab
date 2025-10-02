@@ -174,75 +174,161 @@ textarea {
 .landing {
     .container {
         position: relative;
+
         h1 {
             margin: 0;
             padding: 50px 0 0;
             font-size: 60px;
+
             @media (max-width: 800px) {
                 padding: 80px 0 0;
                 font-size: 40px;
             }
+
             @media (max-width: 500px) {
                 font-size: 35px;
             }
         }
-    
+
         p {
             font-size: 30px;
             margin: -10px 0 15px;
+
             @media (max-width: 800px) {
                 font-size: 20px;
                 margin: -10px 0 30px;
             }
+
             @media (max-width: 500px) {
                 font-size: 18px;
                 margin: 0 0 30px;
             }
         }
-    
-        a {
-            display: block;
-            color: #fff;
-            font-size: 20px;
-            padding: 10px;
-            border: 2px solid #fff;
-            border-radius: 10px;
+
+        .links {
+            display: flex;
+            margin: 0 auto;
+            gap: 30px;
             width: fit-content;
-            margin: 0 auto 50px;
-            transition: 0.5s;
-            &:hover {
-                background-color: #fff;
-                color: #252525;
+
+            a {
+                display: block;
+                color: #fff;
+                font-size: 20px;
+                padding: 10px;
+                border: 2px solid #fff;
+                border-radius: 10px;
+                width: fit-content;
+                margin: 0 auto 50px;
+                transition: 0.5s;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #fff;
+                    color: #252525;
+                }
             }
         }
-    
+
+
+        .androidPopup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 650px;
+            height: 500px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 9px 3px 10px #0000002b;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            z-index: 10;
+
+            &.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            h3 {
+                margin: 30px 0 20px;
+                font-size: 25px;
+            }
+
+            h3:nth-of-type(1) {
+                margin-top: 10px;
+            }
+
+            a {
+                display: block;
+                color: #fff;
+                font-size: 20px;
+                padding: 10px;
+                border: 2px solid #fff;
+                border-radius: 10px;
+                width: fit-content;
+                margin: 0 auto 50px;
+                transition: 0.5s;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #fff;
+                    color: #252525;
+                }
+            }
+
+            img {
+                border-radius: 20px;
+                width: 180px;
+                height: 180px;
+            }
+
+            .close {
+                position: absolute;
+                top: 15px;
+                right: 30px;
+                cursor: pointer;
+                font-size: 24px;
+                color: #fff;
+                font-style: normal;
+                font-weight: bold;
+            }
+        }
+
         iframe {
             border-radius: 10px;
             margin-bottom: 44px;
+
             @media (max-width: 800px) {
                 margin-bottom: 58px;
             }
         }
-    
-        img {
+
+        img.spin {
             filter: invert();
             animation: spin 5s infinite linear;
             position: fixed;
             z-index: -1;
         }
-        img:nth-of-type(1) {
+
+        img.spin:nth-of-type(1) {
             width: 40px;
             height: 40px;
             top: 60px;
             left: 80px;
         }
-        img:nth-of-type(2) {
+
+        img.spin:nth-of-type(2) {
             width: 130px;
             height: 130px;
             top: 280px;
             right: 60px;
         }
-        img:nth-of-type(3) {
+
+        img.spin:nth-of-type(3) {
             width: 90px;
             height: 90px;
             top: 550px;
@@ -261,9 +347,26 @@ textarea {
     }
 }
 
+.blur-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 9;
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}
+
 footer {
     background-color: #1f1f1f;
     padding: 20px 0;
+
     .container {
         a {
             color: #d8d8d8;

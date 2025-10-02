@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quote Tab | Chrome Extension</title>
         <link rel="stylesheet" href="main.css">
-        <link rel="shortcut icon" href="https://github.com/kareem-m/Quote-Tab/blob/main/public/icons/icon_128.png?raw=true" type="image/x-icon">
+        <link rel="shortcut icon" href="media/icon.png" type="image/x-icon">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
@@ -15,18 +15,31 @@
             <div class="container">
                 <h1>Quote Tab | Chrome Extension</h1>
                 <p>New tab = New wisdom</p>
-                <a href="quote-tab.zip">Download zip</a>
+                <div class="links">
+                    <a href="quote-tab.zip">Download Extension</a>
+                    <a id="android-app">Download Android App</a>
+                </div>
+                <div class="androidPopup">
+                    <i class="close">X</i>
+                    <h3>Download APK</h3>
+                    <a href="quote-tab.apk" download>Download</a>
+
+                    <h3>Scan QR Code</h3>
+                    <img src="media/qrcode.png" alt="QR Code">
+                </div>
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/qdHiLWVnl3k?si=ZXryOuVKZcw5lFYS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <img src="spin.svg">
-                <img src="spin.svg">
-                <img src="spin.svg">
+                <img src="media/spin.svg" class="spin">
+                <img src="media/spin.svg" class="spin">
+                <img src="media/spin.svg" class="spin">
             </div>
         </div>
         
         <footer>
             <div class="container">
-                <a href="https://github.com/kareem-m/Quote-Tab" target="_blank">Github Repository</a> - Developed By: <a href="http://kareem.is-a.dev" target="_blank">Kareem Elramady</a>
+                <a href="https://github.com/kareem-m/Quote-Tab" target="_blank">Github Repository</a> - Web Developer: <a href="https://www.linkedin.com/in/kareemelramady/" target="_blank">Kareem Elramady</a> - App Developer: <a href="https://www.linkedin.com/in/amr-m-shehata/" target="_blank">Amr M. Shehata</a>
             </div>
         </footer>
+
+        <script src="main.js"></script>
     </body>
 </html>

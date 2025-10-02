@@ -28,7 +28,7 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "images/wallpaper.jpg"
+                "media/wallpaper.jpg"
             ],
             "matches": [
                 "<all_urls>"

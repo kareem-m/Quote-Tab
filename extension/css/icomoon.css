@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('../icomoon/icomoon.eot?byjtck');
-  src:  url('../icomoon/icomoon.eot?byjtck#iefix') format('embedded-opentype'),
-    url('../icomoon/icomoon.ttf?byjtck') format('truetype'),
-    url('../icomoon/icomoon.woff?byjtck') format('woff'),
-    url('../icomoon/icomoon.svg?byjtck#icomoon') format('svg');
+  src:  url('../icomoon/icomoon.eot?ml4cgu');
+  src:  url('../icomoon/icomoon.eot?ml4cgu#iefix') format('embedded-opentype'),
+    url('../icomoon/icomoon.ttf?ml4cgu') format('truetype'),
+    url('../icomoon/icomoon.woff?ml4cgu') format('woff'),
+    url('../icomoon/icomoon.svg?ml4cgu#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change ../icomoon */
   font-family: 'icomoon' !important;
-  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -30,6 +29,9 @@
 }
 .icon-remove_red_eye:before {
   content: "\e900";
+}
+.icon-search:before {
+  content: "\e986";
 }
 .icon-plus:before {
   content: "\ea0a";

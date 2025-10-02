@@ -105,8 +105,8 @@ nav {
             .searchButton {
                 color: #000;
                 position: absolute;
-                top: 9px;
-                left: 11px;
+                top: 11px;
+                left: 13px;
                 font-size: 16px;
                 cursor: pointer;
             }
@@ -227,6 +227,8 @@ nav {
         }
     }
 }
+/* End Landing */
+
 
 /* blur background */
 .blur-background {
@@ -634,6 +636,3 @@ nav {
 }
 
 /* End Settings */
-
-
-/* End Landing */
