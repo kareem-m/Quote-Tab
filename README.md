@@ -1,54 +1,38 @@
-<img src="https://kareem.is-a.dev/img/projects/quoteTab.png" style="border-radius: 10px"></img>
+<img src="https://kareem.is-a.dev/img/projects/quoteTab.png" style="border-radius: 10px">
 
 <br>
 
 <div align="center">
-  <img src="website/icon.png" width="100px"></img>
-  <br>
-  <br>
+  <img src="https://i.postimg.cc/MpcmhksX/128.png"></img>
 
 # Quote-Tab
-### Quote tab is an extension for google chrome that allows you to change the look of the traditional new tab and make it better and show you a beautiful quote daily.
+### Quote-Tab is a cross-platform project (Chrome Extension & Mobile App) that transforms your new tab into a source of daily inspiration, displaying a beautiful, curated quote every day.
 </div>
 <br>
 
-Transform your mundane new tab into a powerful hub of productivity and inspiration with Quote-Tab. This feature-rich extension is designed to keep you focused, organized, and motivated throughout your day, seamlessly integrating essential life tools into your browsing experience.
+## How To Use It? 🚀
 
-## Key Features:
+### For the Chrome Extension (Load Unpacked Method)
 
-Quote-Tab is more than just a new tab page; it's a productivity ecosystem:
+1.  Go to the ["Quote Tab Website"](https://quote-tab.netlify.app/).
+2.  Click the **"Download Zip"** button or the direct download link available on the site.
 
-- New Tab Enhancement: Instead of a blank or default page, you get a rich, personalized dashboard each time you open a new tab in Chrome.
+After downloading the Zip file from the website, follow these steps:
 
-- Daily Quote: A fresh inspirational quote shows every time you open a new tab.
+1.  Open the Chrome extensions page by navigating to this link in your browser:
+    - `chrome://extensions/`
+2.  Activate the **"Developer mode"** option, which is located in the top right corner.
+3.  Click on **"Load unpacked"**.
+4.  Select the folder of the extension that you downloaded and unzipped.
 
-- Today’s Goal Input: A text field to type in your most important goal/intentions for the day, helping you focus.
+We wish you a wonderful experience with your daily quotes!
 
-- Upcoming Prayer Time: Automatically calculate and display the next Salah (prayer) time.
+---
 
-- Quick Access to Favorite Sites: Shortcuts to websites you frequently use, always visible for convenience.
+### For the Android App
 
-- Sync Across Devices:
+To download and use the mobile application:
 
-- Background (wallpaper/theme) selection is synced.
-
-- To-do list/tasks synchronized across Chrome extension, web, and Android app.
-
-- Android App: All the above features ported to an Android version so you can stay consistent even on mobile.
-
-- User Accounts: Signup/Login functionality so each user has their own profile, settings, todos, quotes etc.
-
-## Technology Stack:
-
-Web Frontend (Extension): HTML, CSS, JavaScript
-Backend & API: Next.js (for server-side logic/API routes) and MongoDB (for database persistence)
-Android Application: Flutter and Dart
-<br>
-
-## How To Use It ?
-- First, download ["quote-tap.zip"](https://quote-tab.netlify.app/) file to your computer & extract it
-- Second, enter this link into the Google Chrome browser
-  - chrome://extensions/
-- Then activate the "Developer mode" option, which is located in the top right
-- Then click on "load unpacked" and select the file you downloaded
-- And so it was downloaded, I wish you a wonderful experience
+1.  Visit the official ["Quote Tab Website"](https://quote-tab.netlify.app/) on your Android device.
+2.  Click the **"Download Android App"** button (or the direct download link).
+3.  Install the downloaded file (APK) and enjoy your daily quotes on the go!
