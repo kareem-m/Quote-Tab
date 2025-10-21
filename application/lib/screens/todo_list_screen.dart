@@ -19,7 +19,8 @@ class TodoListScreen extends StatefulWidget {
   State<TodoListScreen> createState() => _TodoListScreenState();
 }
 
-class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObserver{
+class _TodoListScreenState extends State<TodoListScreen>
+    with WidgetsBindingObserver {
   bool isLoading = false;
 
   late List<Task> todos = [];
@@ -387,22 +388,25 @@ class _TodoListScreenState extends State<TodoListScreen> with WidgetsBindingObse
                                 setState(() {
                                   todos.removeAt(firstCompletedIndex);
                                 });
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    backgroundColor: mainAppColor,
-                                    title: Text('Error'),
-                                    content: Text(
-                                      'Failed to add a new task, Please try again.',
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('OK'),
+                                if (context.mounted) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      backgroundColor: mainAppColor,
+                                      title: Text('Error'),
+                                      content: Text(
+                                        'Failed to add a new task, Please try again.',
                                       ),
-                                    ],
-                                  ),
-                                );
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
                               }
                             },
                           ),
