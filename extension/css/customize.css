@@ -1,103 +1,129 @@
 /* Make sure you place the base color of the website in a variable */
 :root {
-  --main-color: #a08963;
+    --main-color: #a08963;
 }
+
 /* The main styles */
 * {
-  box-sizing: border-box;
-  max-width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
 }
+
 html {
-  scroll-behavior: smooth;
-  /* For change scroll bar in firefox*/
-  scrollbar-color: var(--main-color, #07f) #12151e;
-  scrollbar-width: thin; /*or auto*/
+    scroll-behavior: smooth;
+    /* For change scroll bar in firefox*/
+    scrollbar-color: var(--main-color, #07f) #12151e;
+    scrollbar-width: thin;
+    /*or auto*/
 }
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
 }
+
 ::selection {
-  background-color: var(--main-color, #07f);
-  color: #fff;
+    background-color: var(--main-color, #07f);
+    color: #fff;
 }
 
 /* For change scroll bar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 5px;
+    width: 10px;
+    height: 5px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--main-background, #12151e);
+    background: var(--main-background, #12151e);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--main-color, #07f);
+    background: var(--main-color, #07f);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  border: 1px solid #12151e;
+    border: 1px solid #12151e;
 }
 
 /* global values */
-ul, ol {
-  margin: 0;
-  padding: 0;
+ul,
+ol {
+    margin: 0;
+    padding: 0;
 }
-li { list-style: none; }
+
+li {
+    list-style: none;
+}
+
 a {
-  text-decoration: none;
-  user-select: none;
+    text-decoration: none;
+    user-select: none;
 }
+
 hr {
-  width: 70%;
-  border-color: var(--main-color, #07f);
-  margin: 25px auto;
+    width: 70%;
+    border-color: var(--main-color, #07f);
+    margin: 25px auto;
 }
-nav, footer { user-select: none; }
+
+nav,
+footer {
+    user-select: none;
+}
+
 img {
-  pointer-events: none;
-  user-select: none;
+    pointer-events: none;
+    user-select: none;
 }
 
 form input:not([type="submit"]) {
-  padding: 10px 50px 10px 10px;
-  caret-color: var(--main-color, #07f);
+    padding: 10px 50px 10px 10px;
+    caret-color: var(--main-color, #07f);
 }
+
 [type="submit"] {
-  padding: 10px;
-  cursor: pointer;
-  text-transform: capitalize;
+    padding: 10px;
+    cursor: pointer;
+    text-transform: capitalize;
 }
+
 form input:not([type="submit"]):focus,
 [type="submit"]:focus {
-  outline: 0;
+    outline: 0;
 }
+
 textarea {
-  resize: none; /* both */
+    resize: none;
+    /* both */
 }
 
 /* Framework */
 .container {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-left: auto;
-  margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 /* Small screens */
 @media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
+    .container {
+        width: 750px;
+    }
 }
+
 /* Medium screens */
 @media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
+    .container {
+        width: 970px;
+    }
 }
+
 /* Large screens */
 @media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
+    .container {
+        width: 1170px;
+    }
 }

@@ -341,7 +341,7 @@ function createTaskElement(id, title, completed = false) {
 async function toggleTaskCompleted(taskId, newStatus, div, toggleBtn) {
     if (newStatus) {
         // Play sound effect
-        const audio = new Audio("images/sound.mp3");
+        const audio = new Audio("media/sound.mp3");
         audio.play();
 
         div.classList.add("completed");
@@ -574,7 +574,7 @@ chrome.storage.local.get("wallpaper", (result) => {
     if (result.wallpaper) {
         document.body.style.backgroundImage = `url(${result.wallpaper})`;
     } else {
-        const defaultWallpaper = "images/wallpaper.jpg";
+        const defaultWallpaper = "media/wallpaper.jpg";
         document.body.style.backgroundImage = `url(${defaultWallpaper})`;
 
         chrome.storage.local.set({ wallpaper: defaultWallpaper });
@@ -589,7 +589,7 @@ const nextPrayerElement = document.querySelector("#nextPrayer");
 
 // set default value if not set
 if (localStorage.getItem("showPrayer") === null) {
-    localStorage.setItem("showPrayer", "false");
+    localStorage.setItem("showPrayer", "true");
 }
 
 // read from localStorage
