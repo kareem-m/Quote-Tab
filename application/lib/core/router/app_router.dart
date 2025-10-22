@@ -1,6 +1,6 @@
 import 'package:clean_quote_tab_todo/features/auth/presentation/screens/login_screen.dart';
 import 'package:clean_quote_tab_todo/features/auth/presentation/screens/signup_screen.dart';
-import 'package:clean_quote_tab_todo/features/tasks/presentation/screens/home_screen.dart';
+import 'package:clean_quote_tab_todo/shell/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {

@@ -14,7 +14,7 @@ class RefreshIcon extends ConsumerWidget {
         final error = await notifierProvider.refreshTodos();
         showSnackIfError(context, error);
       },
-      icon: const Icon(Icons.refresh, color: Colors.white),
+      icon: const Icon(Icons.refresh),
     );
   }
 }

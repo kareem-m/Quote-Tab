@@ -1,4 +1,4 @@
-import 'package:clean_quote_tab_todo/core/constants/const_colors.dart';
+import 'package:clean_quote_tab_todo/core/constants/constants.dart';
 import 'package:clean_quote_tab_todo/features/tasks/presentation/providers/tasks_notifier_provider.dart';
 import 'package:clean_quote_tab_todo/core/common/ui/snack.dart';
 import 'package:flutter/material.dart';

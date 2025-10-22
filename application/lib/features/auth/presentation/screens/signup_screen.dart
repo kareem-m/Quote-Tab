@@ -1,5 +1,5 @@
 import 'package:clean_quote_tab_todo/core/common/ui/loading_widget.dart';
-import 'package:clean_quote_tab_todo/core/constants/const_colors.dart';
+import 'package:clean_quote_tab_todo/core/constants/constants.dart';
 import 'package:clean_quote_tab_todo/features/auth/presentation/providers/auth_providers.dart';
 import 'package:clean_quote_tab_todo/features/auth/presentation/widgets/buttons/signup_button.dart';
 import 'package:clean_quote_tab_todo/features/auth/presentation/widgets/design/form_title.dart';

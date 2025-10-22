@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="clean_quote_tab_todo"
+        android:label="Quote Todo"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

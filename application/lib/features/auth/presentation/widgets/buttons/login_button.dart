@@ -1,5 +1,5 @@
 import 'package:clean_quote_tab_todo/core/common/ui/snack.dart';
-import 'package:clean_quote_tab_todo/core/constants/const_colors.dart';
+import 'package:clean_quote_tab_todo/core/constants/constants.dart';
 import 'package:clean_quote_tab_todo/core/errors/failure.dart';
 import 'package:clean_quote_tab_todo/core/router/app_router.dart';
 import 'package:clean_quote_tab_todo/features/auth/presentation/providers/auth_providers.dart';

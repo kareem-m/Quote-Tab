@@ -1,8 +1,8 @@
 import 'package:clean_quote_tab_todo/core/common/ui/loading_widget.dart';
-import 'package:clean_quote_tab_todo/core/constants/const_colors.dart';
+import 'package:clean_quote_tab_todo/core/constants/constants.dart';
 import 'package:clean_quote_tab_todo/features/auth/presentation/providers/auth_providers.dart';
 import 'package:clean_quote_tab_todo/features/auth/presentation/screens/login_screen.dart';
-import 'package:clean_quote_tab_todo/features/tasks/presentation/screens/home_screen.dart';
+import 'package:clean_quote_tab_todo/shell/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

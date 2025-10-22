@@ -8,3 +8,8 @@ const Color completedLineColor =  Color.fromARGB(255, 75, 75, 75);
 const Color trashButtonColor =  Color.fromARGB(194, 252, 104, 93);
 const Color addNewButtonColor = Color.fromARGB(174, 118, 168, 254);
 const Color loadingWidgetColor = Color.fromARGB(255, 29, 36, 52);
+const Color drawerColor = Color.fromARGB(255, 34, 42, 61);
+
+//---------------------------------
+
+const Duration quoteDuration = Duration(seconds: 30);
