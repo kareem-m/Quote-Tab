@@ -43,6 +43,7 @@ class TaskRepoImpl implements TasksRepository {
     if (!(prefs.getBool('usedOnce') ?? false)) {
       final todosFromApi = await getTodosFromApi();
       localSource.cacheTodos(todosFromApi.map((entity) => TaskModel.fromEntity(entity)).toList());
+      prefs.setBool('usedOnce', true);
       return todosFromApi;
     } else {
       final models = localSource.getTodos();

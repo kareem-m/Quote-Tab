@@ -45,7 +45,6 @@ class AuthRepoImpl implements AuthRepository {
   @override
   Future<void> logout() async {
     prefs.setBool('isLoggedIn', false);
-    prefs.setBool('usedOnce', true);
     prefs.setString('currentUsername', '');
     prefs.setString('token', '');
   }
